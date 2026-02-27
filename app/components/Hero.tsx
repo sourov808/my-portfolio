@@ -16,7 +16,6 @@ const typingTexts = [
 ];
 
 export default function Hero() {
-  const [mounted, setMounted] = useState(false);
   const [displayText, setDisplayText] = useState('');
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -27,9 +26,12 @@ export default function Hero() {
   const leftInView = useInView(leftRef, { once: true });
   const rightInView = useInView(rightRef, { once: true });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const currentText = typingTexts[textIndex];
@@ -106,16 +108,22 @@ export default function Hero() {
               I design and build high-performance web systems using modern frontend and backend technologies, with a strong focus on clean architecture and maintainability.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               className="flex flex-wrap gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={leftInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              <button className="bg-primary hover:bg-primary/90 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]">
+              <button
+                onClick={() => scrollToSection('#projects')}
+                className="bg-primary hover:bg-primary/90 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]"
+              >
                 View Projects
               </button>
-              <button className="border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200">
+              <button
+                onClick={() => scrollToSection('#contact')}
+                className="border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200"
+              >
                 Contact Me
               </button>
             </motion.div>

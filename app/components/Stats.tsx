@@ -1,5 +1,8 @@
 'use client';
 
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+
 const stats = [
   { label: 'YEARS_BUILDING', value: '2+', suffix: 'YEARS', color: 'primary' },
   { label: 'PROJECTS_COMPLETED', value: '15+', suffix: 'BUILT', color: 'cyber-lime' },
@@ -8,15 +11,45 @@ const stats = [
 ];
 
 export default function Stats() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { margin: "-50px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const statVariants = {
+    hidden: { opacity: 0, scale: 0.8, rotate: -5 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      transition: { duration: 0.5, type: "spring", stiffness: 120 }
+    }
+  };
   return (
     <section id="stats" className="py-16 bg-[#101622]/30">
       <div className="max-w-7xl mx-auto px-6 md:px-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          ref={ref}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {stats.map((stat, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={statVariants}
+              whileHover={{ scale: 1.05, y: -5 }}
               className={`glass hover:-translate-y-1 transition-all duration-300 hover:bg-white/10 group border-l-4 ${
-                stat.color === 'primary' ? 'border-l-primary' : 
+                stat.color === 'primary' ? 'border-l-primary' :
                 stat.color === 'cyber-lime' ? 'border-l-cyber-lime' : 'border-l-electric-blue'
               }`}
             >
@@ -35,17 +68,19 @@ export default function Stats() {
                   </span>
                 </div>
                 <div className="mt-4 h-0.5 bg-slate-800 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full rounded-full transition-all duration-1000 ${
+                  <motion.div
+                    className={`h-full rounded-full ${
                       stat.color === 'cyber-lime' ? 'bg-cyber-lime' : 'bg-primary'
                     }`}
-                    style={{ width: `${Math.random() * 40 + 60}%` }}
-                  ></div>
+                    initial={{ width: 0 }}
+                    animate={isInView ? { width: `${Math.random() * 40 + 60}%` } : {}}
+                    transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
+                  ></motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

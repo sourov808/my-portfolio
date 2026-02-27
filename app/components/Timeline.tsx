@@ -56,18 +56,38 @@ const IconMap: Record<string, React.ReactNode> = {
 
 export default function Timeline() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { margin: "-100px" });
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const slideFromLeft = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+  };
+
+  const slideFromRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 1 } }
+  };
 
   return (
     <section id="experience" className="py-24 relative">
       <div className="absolute inset-0 micro-graph opacity-30"></div>
-      
+
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
-        <motion.div 
+        <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          variants={headerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
           <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
@@ -81,16 +101,17 @@ export default function Timeline() {
           {experiences.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+              variants={index % 2 === 0 ? slideFromLeft : slideFromRight}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              transition={{ delay: 0.2 + index * 0.15 }}
               className="glass-high-contrast group hover:border-cyber-lime hover:shadow-[0_0_20px_rgba(173,255,47,0.3)] transition-all duration-300 cursor-pointer"
             >
               <div className="p-6 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyber-lime/10 transition-colors">
                   {IconMap[item.icon] || <span className="material-symbols-outlined text-primary group-hover:text-cyber-lime transition-colors">{item.icon}</span>}
                 </div>
-                
+
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                     <h3 className="font-display font-bold text-xl text-white uppercase">{item.title}</h3>
@@ -103,10 +124,10 @@ export default function Timeline() {
           ))}
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1 }}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
           className="mt-8 glass-panel rounded-xl p-6"
         >
           <div className="flex items-center gap-3 mb-4">
@@ -114,7 +135,7 @@ export default function Timeline() {
             <h3 className="font-bold text-white">What's Next?</h3>
           </div>
           <p className="text-slate-400 text-sm leading-relaxed">
-            I'm actively building projects, learning new technologies, and looking for opportunities to contribute to real-world applications. 
+            I'm actively building projects, learning new technologies, and looking for opportunities to contribute to real-world applications.
             My focus is on writing clean, maintainable code and building scalable solutions.
           </p>
         </motion.div>
