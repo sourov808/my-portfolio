@@ -2,23 +2,23 @@
 
 const skills = [
   {
-    icon: 'code',
-    title: 'Frontend',
-    description: 'Building responsive, interactive user interfaces with modern frameworks.',
+    icon: 'web',
+    title: 'Frontend Architecture',
+    description: 'Building responsive, accessible interfaces using React, Next.js, Tailwind CSS, and modern state management.',
     progress: [90, 85, 80, 75],
     borderColor: 'primary',
   },
   {
     icon: 'storage',
-    title: 'Backend',
-    description: 'Developing robust APIs and microservices with scalable architecture.',
+    title: 'State & Data Systems',
+    description: 'Redux Toolkit, Zustand, Server Actions, Prisma ORM, and API integrations.',
     progress: [85, 80, 75, 70],
     borderColor: 'cyber-lime',
   },
   {
     icon: 'cloud',
-    title: 'DevOps',
-    description: 'CI/CD pipelines, containerization, and cloud infrastructure management.',
+    title: 'Backend Integration',
+    description: 'Authentication, database modeling, Supabase, REST APIs, and scalable admin systems.',
     progress: [75, 70, 65, 60],
     borderColor: 'electric-blue',
   },

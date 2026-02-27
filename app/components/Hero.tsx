@@ -22,15 +22,15 @@ export default function Hero() {
             </div>
 
             <h1 className="font-display font-black text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-none mb-4">
-              <span className="text-cyber-lime font-mono text-3xl md:text-4xl block mb-2">$ ./init_portfolio.sh</span>
+              <span className="text-cyber-lime font-mono text-3xl md:text-4xl block mb-2">$ ./init_sourov.sh</span>
               --interactive
             </h1>
 
             <div className="border-l-4 border-cyber-lime bg-black/40 p-4 rounded-r-lg mb-8">
               <p className="font-mono text-cyber-lime text-sm">
-                <span className="text-green-500">✓</span> Loading modules...<br />
-                <span className="text-green-500">✓</span> Initializing UI components...<br />
-                <span className="text-green-500">✓</span> Rendering portfolio...<br />
+                <span className="text-green-500">✓</span> System ready.<br />
+                <span className="text-green-500">✓</span> Specializing in Next.js, React, and scalable application architecture.<br />
+                <span className="text-green-500">✓</span> Status: Actively building production-ready systems.<br />
                 <span className="text-primary animate-blink">▋</span>
               </p>
             </div>

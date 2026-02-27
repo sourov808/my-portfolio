@@ -1,12 +1,12 @@
 'use client';
 
 const nodes = [
-  { id: 1, label: 'API Gateway', icon: 'alt_route', status: 'healthy', x: 20, y: 30 },
-  { id: 2, label: 'Auth Service', icon: 'lock', status: 'healthy', x: 50, y: 20 },
-  { id: 3, label: 'Database', icon: 'database', status: 'healthy', x: 80, y: 30 },
-  { id: 4, label: 'Cache', icon: 'memory', status: 'healthy', x: 35, y: 60 },
-  { id: 5, label: 'Queue', icon: 'sync', status: 'healthy', x: 65, y: 60 },
-  { id: 6, label: 'CDN', icon: 'public', status: 'healthy', x: 50, y: 85 },
+  { id: 1, label: 'E-Commerce Admin', icon: 'admin_panel_settings', status: 'healthy', x: 20, y: 30 },
+  { id: 2, label: 'Blog Platform', icon: 'article', status: 'healthy', x: 50, y: 20 },
+  { id: 3, label: 'Recipe App', icon: 'restaurant_menu', status: 'healthy', x: 80, y: 30 },
+  { id: 4, label: 'Prisma DB', icon: 'storage', status: 'healthy', x: 35, y: 60 },
+  { id: 5, label: 'Redux Store', icon: 'sync', status: 'healthy', x: 65, y: 60 },
+  { id: 6, label: 'Supabase', icon: 'cloud', status: 'healthy', x: 50, y: 85 },
 ];
 
 export default function Playground() {
@@ -71,30 +71,30 @@ export default function Playground() {
           <div className="glass-panel rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="font-mono text-sm text-slate-300">API Gateway</span>
+              <span className="font-mono text-sm text-slate-300">E-Commerce Admin</span>
             </div>
             
             <div className="flex gap-2 mb-4">
               <span className="bg-green-500/20 text-green-500 text-xs font-bold px-2 py-1 rounded">HEALTHY</span>
-              <span className="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded">v2.4.1</span>
+              <span className="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded">Next.js</span>
             </div>
 
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-xs">
-                <span className="text-slate-400">Latency</span>
-                <span className="text-cyber-lime font-mono">12ms</span>
+                <span className="text-slate-400">Stack</span>
+                <span className="text-cyber-lime font-mono">Prisma</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-400">Throughput</span>
-                <span className="text-white font-mono">2.4k/s</span>
+                <span className="text-slate-400">UI</span>
+                <span className="text-white font-mono">Tailwind</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-400">CPU</span>
-                <span className="text-white font-mono">23%</span>
+                <span className="text-slate-400">Auth</span>
+                <span className="text-white font-mono">Enabled</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-400">Error Rate</span>
-                <span className="text-green-500 font-mono">0.01%</span>
+                <span className="text-slate-400">Status</span>
+                <span className="text-green-500 font-mono">Production</span>
               </div>
             </div>
 

@@ -5,15 +5,15 @@ const socialLinks = [
 ];
 
 const systemLogs = [
-  '[SYSTEM] Portfolio v2.4.1 initialized',
+  '[SYSTEM] Portfolio v2.3.1 initialized',
   '[LOAD] All modules loaded successfully',
-  '[NET] Connection established: localhost',
+  '[NET] Connection established: sourov.dev',
   '[SEC] SSL certificate valid',
   '[DB] PostgreSQL connected on port 5432',
   '[API] REST endpoints responsive',
   '[CACHE] Redis cache hit rate: 94%',
-  '[LOG] All systems operational',
-  '[MONITOR] CPU: 23% | Memory: 4.2GB',
+  '[LOG] Production Ready',
+  '[KERNEL] sourov.dev.system',
 ];
 
 export default function Footer() {
@@ -33,10 +33,10 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="text-slate-400 text-sm">
-              © 2024 DEV_PORTFOLIO <span className="text-cyber-lime font-mono">v2.4.1</span>
+              © 2024 DEV_PORTFOLIO <span className="text-cyber-lime font-mono">v2.3.1</span>
             </p>
             <p className="font-mono text-xs text-slate-600 mt-1">
-              SHA256: a1b2c3d4e5f6... (signature)
+              KERNEL: sourov.dev.system | Production Ready
             </p>
           </div>
 

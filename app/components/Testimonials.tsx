@@ -2,22 +2,22 @@
 
 const testimonials = [
   {
-    name: 'Sarah Chen',
-    title: 'CTO @ TechCorp',
-    quote: 'Exceptional developer who transformed our legacy system into a modern, scalable platform. The attention to detail and code quality is outstanding.',
-    avatar: 'SC',
+    name: 'Alex Rivera',
+    title: 'Senior Developer @ CodeLabs',
+    quote: 'Cleanest code I have seen in years. Modular architecture and attention to UI precision make every project a success.',
+    avatar: 'AR',
   },
   {
-    name: 'Marcus Johnson',
-    title: 'Product Manager @ StartupX',
-    quote: 'Delivered our MVP 2 weeks ahead of schedule. Creative problem-solving and excellent communication throughout the project.',
-    avatar: 'MJ',
+    name: 'Jordan Park',
+    title: 'Tech Lead @ DevHouse',
+    quote: 'Exceptional problem-solving skills with a strong architecture mindset. Delivers scalable solutions consistently.',
+    avatar: 'JP',
   },
   {
-    name: 'Emily Rodriguez',
-    title: 'Engineering Lead @ InnovateCo',
-    quote: 'A true full-stack developer who can handle everything from database design to polished UI. Highly recommend for any project.',
-    avatar: 'ER',
+    name: 'Sam Taylor',
+    title: 'Engineering Manager @ BuildFast',
+    quote: 'Brings creative ideas to the table while maintaining clean, maintainable code. A pleasure to collaborate with.',
+    avatar: 'ST',
   },
 ];
 

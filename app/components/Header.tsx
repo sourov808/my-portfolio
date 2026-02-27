@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 
 const navLinks = [
-  { href: '#hero', label: '01. /boot' },
-  { href: '#stats', label: '02. /stats' },
-  { href: '#timeline', label: '03. /timeline' },
-  { href: '#skills', label: '04. /modules' },
-  { href: '#playground', label: '05. /system' },
-  { href: '#testimonials', label: '06. /feedback' },
+  { href: '#hero', label: 'Home' },
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#architecture', label: 'Architecture' },
+  { href: '#contact', label: 'Contact' },
 ];
 
 export default function Header() {
@@ -38,10 +39,9 @@ export default function Header() {
       scrolled ? 'bg-[#0a0812]/90 backdrop-blur-md border-b border-primary/20' : ''
     }`}>
       <div className="max-w-7xl mx-auto px-6 md:px-20 py-4 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2 group">
-          <span className="material-symbols-outlined text-primary text-2xl">terminal</span>
-          <span className="font-display font-bold text-white text-lg">DEV<span className="text-cyber-lime">_PORTFOLIO</span></span>
-          <span className="text-cyber-lime font-mono text-xs ml-1">v2.4.1</span>
+        <a href="#hero" className="flex flex-col group">
+          <span className="font-display font-bold text-white text-lg">Sourov Das</span>
+          <span className="text-cyber-lime font-mono text-xs">Full-Stack Developer</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -49,10 +49,10 @@ export default function Header() {
             <a
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+              className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${
                 activeSection === link.href.slice(1)
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               {link.label}
@@ -71,7 +71,7 @@ export default function Header() {
             <span className="animate-blink text-cyber-lime ml-1">_</span>
           </div>
           <button className="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]">
-            HIRE_EXPERT
+            Hire Me
           </button>
         </div>
       </div>

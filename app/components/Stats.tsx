@@ -1,10 +1,10 @@
 'use client';
 
 const stats = [
-  { label: 'YEARS_EXPERIENCE', value: '5+', suffix: 'EXP', color: 'primary' },
-  { label: 'PROJECTS_COMPLETED', value: '50+', suffix: 'DONE', color: 'cyber-lime' },
-  { label: 'CLIENTS_SERVED', value: '30+', suffix: 'ACTIVE', color: 'electric-blue' },
-  { label: 'CODE_COMMITS', value: '1K+', suffix: 'PUSH', color: 'primary' },
+  { label: 'YEARS_BUILDING', value: '2+', suffix: 'YEARS', color: 'primary' },
+  { label: 'PROJECTS_COMPLETED', value: '15+', suffix: 'BUILT', color: 'cyber-lime' },
+  { label: 'CORE_STACK', value: 'Next.js', suffix: 'REACT', color: 'electric-blue' },
+  { label: 'ARCHITECTURE', value: 'Clean', suffix: 'MODULAR', color: 'primary' },
 ];
 
 export default function Stats() {
