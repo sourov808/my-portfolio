@@ -69,12 +69,8 @@ export default function Contact() {
         </div>
 
         <div className="glass-panel rounded-2xl overflow-hidden">
-          <div className="bg-[#1e1b2e]/90 border-b border-primary/20 px-4 py-2 flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-            <span className="ml-4 font-mono text-xs uppercase tracking-widest text-slate-400">contact.ts</span>
-            <span className="ml-auto text-xs text-slate-500">Node: v18.0.0</span>
+          <div className="bg-[#1e1b2e]/90 border-b border-primary/20 px-4 py-2">
+            <span className="font-mono text-xs uppercase tracking-widest text-slate-400">contact.ts</span>
           </div>
 
           <div className="flex">
