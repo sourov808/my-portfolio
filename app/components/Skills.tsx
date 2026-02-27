@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const coreTechs = [
@@ -39,25 +39,47 @@ const IconMap: Record<string, React.ReactNode> = {
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isLight, setIsLight] = useState(false);
 
   return (
-    <section id="skills" className="py-24 bg-[#101622]/30">
+    <section id="skills" className={`py-24 transition-colors duration-300 ${isLight ? 'bg-gray-50' : 'bg-[#101622]/30'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-20">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
-            Technical Skills
-          </h2>
-          <p className="text-slate-400">Technologies and tools I work with</p>
-        </motion.div>
+        <div className="flex items-center justify-between mb-8">
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+              Technical Skills
+            </h2>
+            <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Technologies and tools I work with</p>
+          </motion.div>
+
+          <button
+            onClick={() => setIsLight(!isLight)}
+            className={`p-3 rounded-lg border transition-all duration-200 ${
+              isLight
+                ? 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100'
+                : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+            }`}
+            aria-label="Toggle theme"
+          >
+            {isLight ? (
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
+                <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
+                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+              </svg>
+            )}
+          </button>
+        </div>
 
         <div className="mb-10">
-          <h3 className="text-lg font-bold text-white text-center mb-4">Core Technologies</h3>
+          <h3 className={`text-lg font-bold text-center mb-4 ${isLight ? 'text-gray-800' : 'text-white'}`}>Core Technologies</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {coreTechs.map((tech, index) => (
               <motion.div
@@ -66,17 +88,21 @@ export default function Skills() {
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg glass border border-white/10 hover:border-primary/50 transition-all cursor-default"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all cursor-default ${
+                  isLight
+                    ? 'bg-white border-gray-200 shadow-sm hover:shadow-md hover:border-primary/50'
+                    : 'glass border-white/10 hover:border-primary/50'
+                }`}
               >
                 {IconMap[tech.icon]}
-                <span className="text-white font-medium text-sm">{tech.name}</span>
+                <span className={`font-medium text-sm ${isLight ? 'text-gray-800' : 'text-white'}`}>{tech.name}</span>
               </motion.div>
             ))}
           </div>
         </div>
 
         <div>
-          <h3 className="text-lg font-bold text-white text-center mb-4">Frameworks & Tools</h3>
+          <h3 className={`text-lg font-bold text-center mb-4 ${isLight ? 'text-gray-800' : 'text-white'}`}>Frameworks & Tools</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {frameworks.map((tech, index) => (
               <motion.div
@@ -85,10 +111,14 @@ export default function Skills() {
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
                 whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg glass border border-white/10 hover:border-cyber-lime/50 transition-all cursor-default"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all cursor-default ${
+                  isLight
+                    ? 'bg-white border-gray-200 shadow-sm hover:shadow-md hover:border-cyber-lime/50'
+                    : 'glass border-white/10 hover:border-cyber-lime/50'
+                }`}
               >
                 {IconMap[tech.icon]}
-                <span className="text-white font-medium text-sm">{tech.name}</span>
+                <span className={`font-medium text-sm ${isLight ? 'text-gray-800' : 'text-white'}`}>{tech.name}</span>
               </motion.div>
             ))}
           </div>
