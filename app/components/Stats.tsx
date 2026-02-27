@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 const stats = [
   { label: 'YEARS_BUILDING', value: '2+', suffix: 'YEARS', color: 'primary' },
@@ -11,11 +12,12 @@ const stats = [
 ];
 
 export default function Stats() {
+  const { isLight } = useTheme();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="stats" className="py-16 bg-[#101622]/30">
+    <section id="stats" className={`py-16 ${isLight ? 'bg-white' : 'bg-[#101622]/30'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
@@ -25,26 +27,26 @@ export default function Stats() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               whileHover={{ scale: 1.03 }}
-              className={`glass hover:-translate-y-1 transition-all duration-300 hover:bg-white/10 group border-l-4 ${
+              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass'} hover:-translate-y-1 transition-all duration-300 ${isLight ? 'hover:bg-gray-50' : 'hover:bg-white/10'} group border-l-4 ${
                 stat.color === 'primary' ? 'border-l-primary' :
                 stat.color === 'cyber-lime' ? 'border-l-cyber-lime' : 'border-l-electric-blue'
               }`}
             >
               <div className="p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">
+                <p className={`text-xs font-bold uppercase tracking-[0.2em] mb-2 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>
                   {stat.label}
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className={`text-3xl font-bold ${
-                    stat.color === 'cyber-lime' ? 'text-cyber-lime' : 'text-white'
+                    stat.color === 'cyber-lime' ? 'text-cyber-lime' : isLight ? 'text-gray-900' : 'text-white'
                   }`}>
                     {stat.value}
                   </span>
-                  <span className="text-xs font-bold bg-white/10 px-2 py-1 rounded text-slate-300">
+                  <span className={`text-xs font-bold px-2 py-1 rounded ${isLight ? 'bg-gray-100 text-gray-600' : 'bg-white/10 text-slate-300'}`}>
                     {stat.suffix}
                   </span>
                 </div>
-                <div className="mt-4 h-0.5 bg-slate-800 rounded-full overflow-hidden">
+                <div className={`mt-4 h-0.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-slate-800'}`}>
                   <motion.div
                     className={`h-full rounded-full ${
                       stat.color === 'cyber-lime' ? 'bg-cyber-lime' : 'bg-primary'

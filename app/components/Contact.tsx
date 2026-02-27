@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface TerminalLine {
   type: 'output' | 'success' | 'error';
@@ -8,6 +9,7 @@ interface TerminalLine {
 }
 
 export default function Contact() {
+  const { isLight } = useTheme();
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [lines, setLines] = useState<TerminalLine[]>([
@@ -28,7 +30,7 @@ export default function Contact() {
     if (!formData.name || !formData.email || !formData.subject || !formData.message) return;
 
     setStatus('sending');
-    
+
     const codeLines = [
       { type: 'output' as const, content: `const name = "${formData.name}";` },
       { type: 'output' as const, content: `const email = "${formData.email}";` },
@@ -37,11 +39,11 @@ export default function Contact() {
       { type: 'output' as const, content: '' },
       { type: 'output' as const, content: '> Transmitting message...' },
     ];
-    
+
     setLines(codeLines);
-    
+
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     setLines([
       ...codeLines,
       { type: 'success', content: '✓ Message transmitted successfully' },
@@ -50,43 +52,43 @@ export default function Contact() {
       { type: 'output', content: '// Thank you for reaching out!' },
       { type: 'output', content: '// I will get back to you soon.' },
     ]);
-    
+
     setStatus('success');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
-    <section id="contact" className="py-24 relative">
-      <div className="absolute inset-0 micro-graph opacity-30"></div>
-      
+    <section id="contact" className={`py-24 relative ${isLight ? 'bg-gray-50' : ''}`}>
+      <div className={`absolute inset-0 micro-graph ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
+
       <div className="max-w-3xl mx-auto px-6 md:px-20 relative z-10">
         <div className="text-center mb-8">
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             <span className="material-symbols-outlined text-primary">mail</span>
             Contact
           </h2>
-          <p className="text-slate-400">Send me a message</p>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Send me a message</p>
         </div>
 
-        <div className="glass-panel rounded-2xl overflow-hidden">
-          <div className="bg-[#1e1b2e]/90 border-b border-primary/20 px-4 py-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-slate-400">contact.ts</span>
+        <div className={`rounded-2xl overflow-hidden ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}>
+          <div className={`border-b px-4 py-2 ${isLight ? 'bg-gray-50 border-gray-200' : 'bg-[#1e1b2e]/90 border-primary/20'}`}>
+            <span className={`font-mono text-xs uppercase tracking-widest ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>contact.ts</span>
           </div>
 
           <div className="flex">
-            <div className="w-1/3 bg-black/30 p-4 font-mono text-xs border-r border-white/5">
+            <div className={`w-1/3 p-4 font-mono text-xs border-r ${isLight ? 'bg-gray-50 border-gray-200' : 'bg-black/30 border-white/5'}`}>
               {status === 'success' ? (
                 <div className="space-y-2">
                   <div className="text-green-500">✓ Delivered</div>
-                  <div className="text-slate-500">Message sent!</div>
+                  <div className={isLight ? 'text-gray-500' : 'text-slate-500'}>Message sent!</div>
                 </div>
               ) : status === 'sending' ? (
                 <div className="space-y-2">
                   <div className="text-cyber-lime animate-pulse">▌ Sending...</div>
-                  <div className="text-slate-500">Transmitting</div>
+                  <div className={isLight ? 'text-gray-500' : 'text-slate-500'}>Transmitting</div>
                 </div>
               ) : (
-                <div className="space-y-2 text-slate-500">
+                <div className={`space-y-2 ${isLight ? 'text-gray-500' : 'text-slate-500'}`}>
                   <div>Fields:</div>
                   <div>- name</div>
                   <div>- email</div>
@@ -106,23 +108,23 @@ export default function Contact() {
                   <div key={field.key} className="flex items-center gap-2">
                     <span className="text-primary font-mono text-sm">const</span>
                     <span className="text-cyber-lime font-mono text-sm">{field.label}</span>
-                    <span className="text-slate-500 font-mono text-sm">=</span>
+                    <span className={isLight ? 'text-gray-400 font-mono text-sm' : 'text-slate-500 font-mono text-sm'}>=</span>
                     <input
                       type={field.type}
                       value={formData[field.key as keyof typeof formData]}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
                       disabled={status !== 'idle'}
                       placeholder={field.placeholder}
-                      className="flex-1 bg-transparent border-b border-white/10 focus:border-cyber-lime outline-none font-mono text-sm text-white placeholder:text-slate-600 py-1"
+                      className={`flex-1 border-b focus:border-cyber-lime outline-none font-mono text-sm py-1 ${isLight ? 'bg-transparent border-gray-300 text-gray-900 placeholder:text-gray-400' : 'bg-transparent border-white/10 text-white placeholder:text-slate-600'}`}
                     />
-                    <span className="text-slate-500 font-mono text-sm">;</span>
+                    <span className={isLight ? 'text-gray-400 font-mono text-sm' : 'text-slate-500 font-mono text-sm'}>;</span>
                   </div>
                 ))}
 
                 <div className="flex items-start gap-2 pt-2">
                   <span className="text-primary font-mono text-sm">const</span>
                   <span className="text-cyber-lime font-mono text-sm">message</span>
-                  <span className="text-slate-500 font-mono text-sm">=</span>
+                  <span className={isLight ? 'text-gray-400 font-mono text-sm' : 'text-slate-500 font-mono text-sm'}>=</span>
                   <span className="text-yellow-500 font-mono text-sm">`</span>
                   <textarea
                     value={formData.message}
@@ -130,10 +132,10 @@ export default function Contact() {
                     disabled={status !== 'idle'}
                     placeholder="Your message..."
                     rows={3}
-                    className="flex-1 bg-transparent border-b border-white/10 focus:border-cyber-lime outline-none font-mono text-sm text-white placeholder:text-slate-600 py-1 resize-none"
+                    className={`flex-1 border-b focus:border-cyber-lime outline-none font-mono text-sm py-1 resize-none ${isLight ? 'bg-transparent border-gray-300 text-gray-900 placeholder:text-gray-400' : 'bg-transparent border-white/10 text-white placeholder:text-slate-600'}`}
                   />
                   <span className="text-yellow-500 font-mono text-sm">`</span>
-                  <span className="text-slate-500 font-mono text-sm">;</span>
+                  <span className={isLight ? 'text-gray-400 font-mono text-sm' : 'text-slate-500 font-mono text-sm'}>;</span>
                 </div>
 
                 <button
@@ -147,10 +149,10 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="border-t border-white/5 px-4 py-2 bg-black/20">
-            <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+          <div className={`border-t px-4 py-2 ${isLight ? 'border-gray-200 bg-gray-50' : 'border-white/5 bg-black/20'}`}>
+            <div className="flex items-center gap-2 text-xs font-mono">
               <span className="text-green-500">●</span>
-              <span>Connected to sourov.dev</span>
+              <span className={isLight ? 'text-gray-500' : 'text-slate-500'}>Connected to sourov.dev</span>
             </div>
           </div>
         </div>

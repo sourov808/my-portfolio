@@ -1,3 +1,7 @@
+'use client';
+
+import { useTheme } from '../context/ThemeContext';
+
 const socialLinks = [
   {
     label: 'GitHub',
@@ -44,25 +48,26 @@ const systemLogs = [
 ];
 
 export default function Footer() {
+  const { isLight } = useTheme();
   return (
-    <footer className="border-t border-primary/20">
-      <div className="overflow-hidden bg-black/40 py-2 border-b border-white/5">
+    <footer className={isLight ? 'border-t border-gray-200' : 'border-t border-primary/20'}>
+      <div className={`overflow-hidden py-2 border-b ${isLight ? 'bg-gray-100 border-gray-200' : 'bg-black/40 border-white/5'}`}>
         <div className="animate-ticker whitespace-nowrap">
           {systemLogs.map((log, index) => (
-            <span key={index} className="font-mono text-[10px] text-cyber-lime mx-8">
-              {log} <span className="text-primary">|</span>
+            <span key={index} className={`font-mono text-[10px] mx-8 ${isLight ? 'text-gray-600' : 'text-cyber-lime'}`}>
+              {log} <span className={isLight ? 'text-gray-400' : 'text-primary'}>|</span>
             </span>
           ))}
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-20 py-12">
+      <div className={`max-w-7xl mx-auto px-6 md:px-20 py-12 ${isLight ? 'bg-gray-100' : ''}`}>
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <p className="text-slate-400 text-sm">
+            <p className={`text-sm ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
               © 2026 Sourov Das. All Rights Reserved.
             </p>
-            <p className="font-mono text-xs text-slate-600 mt-1">
+            <p className={`font-mono text-xs mt-1 ${isLight ? 'text-gray-500' : 'text-slate-600'}`}>
               System Status: Production | Architecture: Modular & Scalable
             </p>
           </div>
@@ -72,7 +77,7 @@ export default function Footer() {
               <a
                 key={index}
                 href={link.href}
-                className="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors"
+                className={`flex items-center gap-2 transition-colors ${isLight ? 'text-gray-600 hover:text-primary' : 'text-slate-400 hover:text-primary'}`}
               >
                 {link.icon}
                 <span className="font-medium text-sm">{link.label}</span>

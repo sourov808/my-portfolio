@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const nodes = [
   { id: 1, label: 'Next.js', icon: 'next', x: 50, y: 10 },
@@ -90,21 +91,22 @@ const connections = [
 ];
 
 export default function Playground() {
+  const { isLight } = useTheme();
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
   return (
-    <section id="architecture" className="py-24 relative min-h-screen simulation-grid">
-      <div className="absolute inset-0 bg-[#0a0812]/80"></div>
+    <section id="architecture" className={`py-24 relative min-h-screen ${isLight ? 'bg-gray-50' : 'simulation-grid'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-white/50' : 'bg-[#0a0812]/80'}`}></div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             Architecture
           </h2>
-          <p className="text-slate-400">Technology stack visualization</p>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Technology stack visualization</p>
         </div>
 
-        <div className="glass-panel rounded-2xl p-6 min-h-[500px] relative">
+        <div className={`rounded-2xl p-6 min-h-[500px] relative ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}>
           {/* Connection lines */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.4 }}>
             {connections.map((cable, i) => (
@@ -123,7 +125,7 @@ export default function Playground() {
 
           <div className="absolute top-4 left-4 flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-xs text-slate-400 font-mono">Tech Stack</span>
+            <span className={`text-xs font-mono ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>Tech Stack</span>
           </div>
 
           {/* Nodes */}
@@ -134,16 +136,20 @@ export default function Playground() {
               style={{ left: `${node.x}%`, top: `${node.y}%` }}
               onClick={() => setSelectedNode(selectedNode === node.id ? null : node.id)}
             >
-              <div className={`w-14 h-14 rounded-xl glass border transition-all duration-300 flex items-center justify-center ${
-                selectedNode === node.id
-                  ? 'border-cyber-lime shadow-[0_0_25px_rgba(173,255,47,0.7)]'
-                  : 'border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)]'
+              <div className={`w-14 h-14 rounded-xl border transition-all duration-300 flex items-center justify-center ${
+                isLight
+                  ? selectedNode === node.id
+                    ? 'bg-white border-cyber-lime shadow-[0_0_25px_rgba(173,255,47,0.7)]'
+                    : 'bg-white border-gray-200 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)]'
+                  : selectedNode === node.id
+                    ? 'glass border-cyber-lime shadow-[0_0_25px_rgba(173,255,47,0.7)]'
+                    : 'glass border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)]'
               }`}>
                 {IconMap[node.icon]}
               </div>
               <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
                 <span className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
-                  selectedNode === node.id ? 'bg-cyber-lime text-black' : 'bg-white/10 text-slate-300'
+                  selectedNode === node.id ? 'bg-cyber-lime text-black' : isLight ? 'bg-gray-100 text-gray-600' : 'bg-white/10 text-slate-300'
                 }`}>
                   {node.label}
                 </span>
@@ -153,17 +159,17 @@ export default function Playground() {
         </div>
 
         <div className="mt-6 grid grid-cols-3 gap-4">
-          <div className="glass p-3 rounded-lg text-center">
+          <div className={`p-3 rounded-lg text-center ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass'}`}>
             <span className="text-xs text-primary font-bold">LEVEL 1</span>
-            <p className="text-[10px] text-slate-400 mt-1">Frameworks</p>
+            <p className={`text-[10px] mt-1 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>Frameworks</p>
           </div>
-          <div className="glass p-3 rounded-lg text-center">
+          <div className={`p-3 rounded-lg text-center ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass'}`}>
             <span className="text-xs text-cyber-lime font-bold">LEVEL 2</span>
-            <p className="text-[10px] text-slate-400 mt-1">State & Tools</p>
+            <p className={`text-[10px] mt-1 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>State & Tools</p>
           </div>
-          <div className="glass p-3 rounded-lg text-center">
+          <div className={`p-3 rounded-lg text-center ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass'}`}>
             <span className="text-xs text-green-500 font-bold">LEVEL 3</span>
-            <p className="text-[10px] text-slate-400 mt-1">Database</p>
+            <p className={`text-[10px] mt-1 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>Database</p>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 const projects = [
   {
@@ -25,13 +26,14 @@ const projects = [
 ];
 
 export default function Projects() {
+  const { isLight } = useTheme();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-electric-blue/20 rounded-full blur-3xl"></div>
+    <section id="projects" className={`py-24 relative overflow-hidden ${isLight ? 'bg-gray-50' : ''}`}>
+      <div className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl ${isLight ? 'bg-primary/10' : 'bg-primary/20'}`}></div>
+      <div className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl ${isLight ? 'bg-electric-blue/10' : 'bg-electric-blue/20'}`}></div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
@@ -41,10 +43,10 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             Projects
           </h2>
-          <p className="text-slate-400">Featured work and applications</p>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Featured work and applications</p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -54,15 +56,15 @@ export default function Projects() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass-panel hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-300 rounded-xl p-6 group"
+              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'} hover:-translate-y-1 ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]'} transition-all duration-300 rounded-xl p-6 group`}
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${isLight ? 'bg-primary/10 group-hover:bg-primary/20' : 'bg-primary/10 group-hover:bg-primary/20'}`}>
                 <span className="material-symbols-outlined text-primary text-2xl">{project.icon}</span>
               </div>
 
-              <h4 className="font-bold text-white text-lg mb-2">{project.name}</h4>
+              <h4 className={`font-bold text-lg mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>{project.name}</h4>
               <p className="text-primary text-xs font-mono mb-3">{project.stack}</p>
-              <p className="text-slate-400 text-sm leading-relaxed">
+              <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
                 {project.description}
               </p>
             </motion.div>

@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 const skills = [
   { name: 'Frontend', value: 85, icon: 'web' },
@@ -11,11 +12,12 @@ const skills = [
 ];
 
 export default function About() {
+  const { isLight } = useTheme();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 bg-[#101622]/30">
+    <section id="about" className={`py-24 ${isLight ? 'bg-gray-50' : 'bg-[#101622]/30'}`}>
       <div className="max-w-4xl mx-auto px-6 md:px-20">
         <motion.div
           ref={ref}
@@ -24,29 +26,29 @@ export default function About() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             <span className="material-symbols-outlined text-primary">person</span>
             About Me
           </h2>
-          <p className="text-slate-400">Professional background and focus</p>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Professional background and focus</p>
         </motion.div>
 
         <motion.div
-          className="glass-panel rounded-2xl p-8"
+          className={`rounded-2xl p-8 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="font-display font-bold text-2xl text-white mb-4 flex items-center gap-2">
+              <h3 className={`font-display font-bold text-2xl mb-4 flex items-center gap-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
                 <span className="material-symbols-outlined text-primary">code</span>
                 Full-Stack Developer
               </h3>
-              <p className="text-slate-300 leading-relaxed mb-4">
+              <p className={`leading-relaxed mb-4 ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 I am a Full-Stack Developer specializing in building scalable web applications with modern technologies. With strong expertise in Next.js, React, and backend integration, I focus on creating clean, modular, and maintainable code.
               </p>
-              <p className="text-slate-300 leading-relaxed">
+              <p className={`leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 My approach combines technical precision with practical solutions, ensuring every project delivers real value and scales effectively.
               </p>
             </div>
@@ -55,7 +57,7 @@ export default function About() {
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
-                  className="flex items-center gap-3 p-4 bg-black/40 rounded-lg"
+                  className={`flex items-center gap-3 p-4 rounded-lg ${isLight ? 'bg-gray-50' : 'bg-black/40'}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
@@ -63,10 +65,10 @@ export default function About() {
                   <span className="material-symbols-outlined text-primary">{skill.icon}</span>
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-slate-400 text-sm">{skill.name}</span>
+                      <span className={`text-sm ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>{skill.name}</span>
                       <span className="text-cyber-lime font-mono text-sm">{skill.value}%</span>
                     </div>
-                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className={`h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-slate-800'}`}>
                       <motion.div
                         className="h-full bg-gradient-to-r from-primary to-cyber-lime rounded-full"
                         initial={{ width: 0 }}

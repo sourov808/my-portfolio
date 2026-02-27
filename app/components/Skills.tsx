@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 const coreTechs = [
   { name: 'JavaScript', icon: 'javascript' },
@@ -39,44 +40,23 @@ const IconMap: Record<string, React.ReactNode> = {
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isLight, setIsLight] = useState(false);
+  const { isLight } = useTheme();
 
   return (
     <section id="skills" className={`py-24 transition-colors duration-300 ${isLight ? 'bg-gray-50' : 'bg-[#101622]/30'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-20">
-        <div className="flex items-center justify-between mb-8">
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-              Technical Skills
-            </h2>
-            <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Technologies and tools I work with</p>
-          </motion.div>
-
-          <button
-            onClick={() => setIsLight(!isLight)}
-            className={`p-3 rounded-lg border transition-all duration-200 ${
-              isLight
-                ? 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100'
-                : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
-            }`}
-            aria-label="Toggle theme"
-          >
-            {isLight ? (
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
-              </svg>
-            )}
-          </button>
-        </div>
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+            Technical Skills
+          </h2>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Technologies and tools I work with</p>
+        </motion.div>
 
         <div className="mb-10">
           <h3 className={`text-lg font-bold text-center mb-4 ${isLight ? 'text-gray-800' : 'text-white'}`}>Core Technologies</h3>

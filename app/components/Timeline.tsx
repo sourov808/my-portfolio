@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
   {
@@ -55,12 +56,13 @@ const IconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Timeline() {
+  const { isLight } = useTheme();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 relative">
-      <div className="absolute inset-0 micro-graph opacity-30"></div>
+    <section id="experience" className={`py-24 relative ${isLight ? 'bg-gray-50' : ''}`}>
+      <div className={`absolute inset-0 micro-graph ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
@@ -70,11 +72,11 @@ export default function Timeline() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
+          <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             <span className="material-symbols-outlined text-primary">history</span>
             Learning Journey
           </h2>
-          <p className="text-slate-400">My path to becoming a developer</p>
+          <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>My path to becoming a developer</p>
         </motion.div>
 
         <div className="space-y-6">
@@ -84,19 +86,19 @@ export default function Timeline() {
               initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="glass-high-contrast group hover:border-cyber-lime hover:shadow-[0_0_20px_rgba(173,255,47,0.3)] transition-all duration-300 cursor-pointer"
+              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-high-contrast'} group ${isLight ? 'hover:border-primary' : 'hover:border-cyber-lime'} ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(173,255,47,0.3)]'} transition-all duration-300 cursor-pointer`}
             >
               <div className="p-6 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyber-lime/10 transition-colors">
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${isLight ? 'bg-primary/10 group-hover:bg-cyber-lime/10' : 'bg-primary/10 group-hover:bg-cyber-lime/10'}`}>
                   {IconMap[item.icon] || <span className="material-symbols-outlined text-primary group-hover:text-cyber-lime transition-colors">{item.icon}</span>}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3 className="font-display font-bold text-xl text-white uppercase">{item.title}</h3>
+                    <h3 className={`font-display font-bold text-xl uppercase ${isLight ? 'text-gray-900' : 'text-white'}`}>{item.title}</h3>
                     <span className="text-cyber-lime font-mono text-sm">{item.year}</span>
                   </div>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                  <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>{item.description}</p>
                 </div>
               </div>
             </motion.div>
@@ -107,13 +109,13 @@ export default function Timeline() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-8 glass-panel rounded-xl p-6"
+          className={`mt-8 rounded-xl p-6 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}
         >
           <div className="flex items-center gap-3 mb-4">
             <span className="material-symbols-outlined text-primary">lightbulb</span>
-            <h3 className="font-bold text-white">What's Next?</h3>
+            <h3 className={`font-bold ${isLight ? 'text-gray-900' : 'text-white'}`}>What's Next?</h3>
           </div>
-          <p className="text-slate-400 text-sm leading-relaxed">
+          <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
             I'm actively building projects, learning new technologies, and looking for opportunities to contribute to real-world applications.
             My focus is on writing clean, maintainable code and building scalable solutions.
           </p>
