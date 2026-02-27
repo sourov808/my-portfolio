@@ -1,10 +1,11 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
-import Timeline from './components/Timeline';
 import Skills from './components/Skills';
+import Timeline from './components/Timeline';
+import Projects from './components/Projects';
 import Playground from './components/Playground';
-import Testimonials from './components/Testimonials';
+import About from './components/About';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 export default function Home() {
@@ -12,11 +13,12 @@ export default function Home() {
     <main className="min-h-screen bg-[#0a0812]">
       <Header />
       <Hero />
-      <Stats />
-      <Timeline />
       <Skills />
+      <Timeline />
+      <Projects />
       <Playground />
-      <Testimonials />
+      <About />
+      <Contact />
       <Footer />
     </main>
   );

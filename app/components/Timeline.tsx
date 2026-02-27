@@ -1,60 +1,94 @@
 'use client';
 
-const milestones = [
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+
+const experiences = [
   {
-    icon: 'school',
-    title: 'Computer Science Degree',
-    description: 'Foundation in algorithms, data structures, and software engineering principles.',
-    year: '2020',
-    binary: '01110100 01101000',
-  },
-  {
-    icon: 'work',
-    title: 'Junior Developer',
-    description: 'Started professional journey building responsive web applications.',
-    year: '2021',
-    binary: '01101000 01110100',
-  },
-  {
-    icon: 'trending_up',
-    title: 'Full Stack Engineer',
-    description: 'Led development of enterprise SaaS products and microservices.',
+    icon: 'javascript',
+    title: 'JavaScript Fundamentals',
+    description: 'Started with core JavaScript concepts, DOM manipulation, and ES6+ features.',
     year: '2023',
-    binary: '01100100 01100101',
   },
   {
-    icon: 'rocket_launch',
-    title: 'Senior Developer',
-    description: 'Architecting scalable solutions and mentoring junior developers.',
+    icon: 'react',
+    title: 'React Development',
+    description: 'Learned React hooks, state management, component architecture, and modern patterns.',
+    year: '2023',
+  },
+  {
+    icon: 'web',
+    title: 'Full-Stack Development',
+    description: 'Expanded to Next.js, backend APIs, database integration, and authentication.',
     year: '2024',
-    binary: '01110110 00110101',
+  },
+  {
+    icon: 'deployment',
+    title: 'Building Projects',
+    description: 'Creating real-world applications to solve problems and learn best practices.',
+    year: '2024',
   },
 ];
 
+const IconMap: Record<string, React.ReactNode> = {
+  javascript: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#F7DF1E">
+      <path d="M3 3h18v18H3V3zm9.5 14.5v-4h1v4h1.5v-6h-5v2h1.5zm1-3.5v-1h2v1h-2zm7.5 5.5h-2v-6h2v1.5h1v1h-1v1h-1v1h1v1.5zm-12.5-5h2v-2h-2v-1h3v3h-3v-1z"/>
+    </svg>
+  ),
+  react: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#61DAFB">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#61DAFB" strokeWidth="1.5" fill="none"/>
+    </svg>
+  ),
+  web: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#8b5cf6">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    </svg>
+  ),
+  deployment: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#10b981">
+      <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 14h20v-4H2v4zm2-3h2v2H4v-2zm4-3V4l4 4-4 4v-3h-4v4h4zM10 8H6V4h4v4zm0 4H6v-4h4v4zm0 4H6v-4h4v4zm6-8v4l4-4-4-4v3h-4v4h4zM16 8h-4V4h4v4zm0 4h-4v-4h4v4zm0 4h-4v-4h4v4z"/>
+    </svg>
+  ),
+};
+
 export default function Timeline() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section id="timeline" className="py-24 relative">
+    <section id="experience" className="py-24 relative">
       <div className="absolute inset-0 micro-graph opacity-30"></div>
       
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
-            Milestones <span className="text-cyber-lime font-mono text-2xl">_decrypted</span>
+        <motion.div 
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
+            <span className="material-symbols-outlined text-primary">history</span>
+            Learning Journey
           </h2>
-          <p className="text-slate-400">My journey through the digital realm</p>
-        </div>
+          <p className="text-slate-400">My path to becoming a developer</p>
+        </motion.div>
 
         <div className="space-y-6">
-          {milestones.map((item, index) => (
-            <div
+          {experiences.map((item, index) => (
+            <motion.div
               key={index}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
               className="glass-high-contrast group hover:border-cyber-lime hover:shadow-[0_0_20px_rgba(173,255,47,0.3)] transition-all duration-300 cursor-pointer"
             >
               <div className="p-6 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyber-lime/10 transition-colors">
-                  <span className="material-symbols-outlined text-primary group-hover:text-cyber-lime transition-colors">
-                    {item.icon}
-                  </span>
+                  {IconMap[item.icon] || <span className="material-symbols-outlined text-primary group-hover:text-cyber-lime transition-colors">{item.icon}</span>}
                 </div>
                 
                 <div className="flex-1">
@@ -63,14 +97,27 @@ export default function Timeline() {
                     <span className="text-cyber-lime font-mono text-sm">{item.year}</span>
                   </div>
                   <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
-                  <p className="font-mono text-xs text-primary/60 mt-2 group-hover:text-cyber-lime transition-colors">
-                    {item.binary}
-                  </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="mt-8 glass-panel rounded-xl p-6"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="material-symbols-outlined text-primary">lightbulb</span>
+            <h3 className="font-bold text-white">What's Next?</h3>
+          </div>
+          <p className="text-slate-400 text-sm leading-relaxed">
+            I'm actively building projects, learning new technologies, and looking for opportunities to contribute to real-world applications. 
+            My focus is on writing clean, maintainable code and building scalable solutions.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

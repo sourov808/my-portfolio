@@ -5,15 +5,18 @@ const socialLinks = [
 ];
 
 const systemLogs = [
-  '[SYSTEM] Portfolio v2.3.1 initialized',
-  '[LOAD] All modules loaded successfully',
-  '[NET] Connection established: sourov.dev',
-  '[SEC] SSL certificate valid',
-  '[DB] PostgreSQL connected on port 5432',
-  '[API] REST endpoints responsive',
-  '[CACHE] Redis cache hit rate: 94%',
-  '[LOG] Production Ready',
-  '[KERNEL] sourov.dev.system',
+  '[INFO] Next.js server started on port 3000',
+  '[INFO] Database connected: postgresql://localhost:5432',
+  '[INFO] Redis cache initialized',
+  '[INFO] Session middleware loaded',
+  '[INFO] API routes registered: 24 endpoints',
+  '[INFO] Static assets optimized',
+  '[INFO] Build completed in 2.3s',
+  '[INFO] Memory usage: 128MB / 512MB',
+  '[INFO] Uptime: 99.9%',
+  '[INFO] All systems operational',
+  '[WARN] Rate limiter: 80% threshold',
+  '[INFO] Request/response logging enabled',
 ];
 
 export default function Footer() {
@@ -33,10 +36,10 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="text-slate-400 text-sm">
-              © 2024 DEV_PORTFOLIO <span className="text-cyber-lime font-mono">v2.3.1</span>
+              © 2026 Sourov Das. All Rights Reserved.
             </p>
             <p className="font-mono text-xs text-slate-600 mt-1">
-              KERNEL: sourov.dev.system | Production Ready
+              System Status: Production | Architecture: Modular & Scalable
             </p>
           </div>
 

@@ -5,10 +5,8 @@ import { useState, useEffect } from 'react';
 const navLinks = [
   { href: '#hero', label: 'Home' },
   { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
   { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
-  { href: '#architecture', label: 'Architecture' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -41,7 +39,6 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 md:px-20 py-4 flex items-center justify-between">
         <a href="#hero" className="flex flex-col group">
           <span className="font-display font-bold text-white text-lg">Sourov Das</span>
-          <span className="text-cyber-lime font-mono text-xs">Full-Stack Developer</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -60,20 +57,9 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center bg-black/40 border border-primary/40 rounded-lg px-3 py-2">
-            <span className="text-cyber-lime font-mono text-sm mr-2">$</span>
-            <input
-              type="text"
-              placeholder="search..."
-              className="bg-transparent border-none outline-none text-cyber-lime font-mono text-sm w-24 placeholder:text-slate-600"
-            />
-            <span className="animate-blink text-cyber-lime ml-1">_</span>
-          </div>
-          <button className="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]">
-            Hire Me
-          </button>
-        </div>
+        <button className="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]">
+          Hire Me
+        </button>
       </div>
     </header>
   );
