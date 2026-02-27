@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const nodes = [
   { id: 1, label: 'Next.js', icon: 'next', x: 50, y: 10 },
@@ -15,9 +14,6 @@ const nodes = [
   { id: 9, label: 'Supabase', icon: 'supabase', x: 50, y: 75 },
   { id: 10, label: 'PostgreSQL', icon: 'postgresql', x: 75, y: 75 },
 ];
-
-// Sequential flow path: Next.js → React → TypeScript → Tailwind → Redux → Zustand → Node.js → Prisma → Supabase → PostgreSQL
-const flowPath = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const IconMap: Record<string, React.ReactNode> = {
   next: (
@@ -78,7 +74,7 @@ const IconMap: Record<string, React.ReactNode> = {
   ),
 };
 
-const cableConnections = [
+const connections = [
   { from: 0, to: 1 },
   { from: 0, to: 2 },
   { from: 1, to: 3 },
@@ -95,25 +91,11 @@ const cableConnections = [
 
 export default function Playground() {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
-  const [activeFlowIndex, setActiveFlowIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveFlowIndex((prev) => (prev + 1) % flowPath.length);
-    }, 800);
-    return () => clearInterval(interval);
-  }, []);
-
-  const getFlowProgress = (index: number) => {
-    if (index <= activeFlowIndex) return 1;
-    if (index === activeFlowIndex + 1) return 0.5;
-    return 0;
-  };
 
   return (
     <section id="architecture" className="py-24 relative min-h-screen simulation-grid">
       <div className="absolute inset-0 bg-[#0a0812]/80"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
         <div className="text-center mb-12">
           <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
@@ -122,123 +104,52 @@ export default function Playground() {
           <p className="text-slate-400">Technology stack visualization</p>
         </div>
 
-        <div className="glass-panel rounded-2xl p-6 min-h-[500px] relative overflow-hidden">
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.6 }}>
-            {/* Static connection lines */}
-            {cableConnections.map((cable, i) => (
+        <div className="glass-panel rounded-2xl p-6 min-h-[500px] relative">
+          {/* Connection lines */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.4 }}>
+            {connections.map((cable, i) => (
               <line
-                key={`line-${i}`}
+                key={i}
                 x1={`${nodes[cable.from].x}%`}
                 y1={`${nodes[cable.from].y}%`}
                 x2={`${nodes[cable.to].x}%`}
                 y2={`${nodes[cable.to].y}%`}
-                stroke="rgba(139,92,246,0.3)"
+                stroke="rgba(139,92,246,0.4)"
                 strokeWidth="2"
                 strokeDasharray="4 4"
               />
             ))}
-
-            {/* Sequential flow lines - highlight path as data flows */}
-            {flowPath.slice(0, -1).map((fromIdx, i) => {
-              const toIdx = flowPath[i + 1];
-              const progress = getFlowProgress(i);
-              if (progress === 0) return null;
-
-              const fromNode = nodes[fromIdx];
-              const toNode = nodes[toIdx];
-
-              return (
-                <motion.line
-                  key={`flow-${i}`}
-                  x1={`${fromNode.x}%`}
-                  y1={`${fromNode.y}%`}
-                  x2={`${toNode.x}%`}
-                  y2={`${toNode.y}%`}
-                  stroke={progress === 1 ? '#adff2f' : '#8b5cf6'}
-                  strokeWidth="3"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{
-                    pathLength: progress,
-                    opacity: progress > 0 ? 1 : 0,
-                    stroke: progress === 1 ? 'rgba(173,255,47,0.8)' : 'rgba(139,92,246,0.8)'
-                  }}
-                  transition={{ duration: 0.4 }}
-                />
-              );
-            })}
-
-            {/* Animated data packet traveling along the flow */}
-            <circle r="5" fill="#adff2f" filter="url(#glow)">
-              <animateMotion
-                dur="8s"
-                repeatCount="indefinite"
-                path={`M${nodes[0].x * 5},${nodes[0].y * 4} L${nodes[1].x * 5},${nodes[1].y * 4} L${nodes[2].x * 5},${nodes[2].y * 4} L${nodes[3].x * 5},${nodes[3].y * 4} L${nodes[4].x * 5},${nodes[4].y * 4} L${nodes[5].x * 5},${nodes[5].y * 4} L${nodes[6].x * 5},${nodes[6].y * 4} L${nodes[7].x * 5},${nodes[7].y * 4} L${nodes[8].x * 5},${nodes[8].y * 4} L${nodes[9].x * 5},${nodes[9].y * 4}`}
-              />
-            </circle>
           </svg>
-
-          <defs>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
 
           <div className="absolute top-4 left-4 flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-xs text-slate-400 font-mono">Live Data Transfer</span>
+            <span className="text-xs text-slate-400 font-mono">Tech Stack</span>
           </div>
 
-          <div className="absolute top-4 right-4 flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-mono">Level 1</span>
-            <span className="text-xs text-slate-600">→</span>
-            <span className="text-xs text-slate-500 font-mono">Level 2</span>
-            <span className="text-xs text-slate-600">→</span>
-            <span className="text-xs text-slate-500 font-mono">Level 3</span>
-          </div>
-
-          {nodes.map((node, index) => {
-            const isActive = index === activeFlowIndex;
-            const hasBeenActive = index < activeFlowIndex;
-
-            return (
-              <motion.div
-                key={node.id}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                onClick={() => setSelectedNode(selectedNode === node.id ? null : node.id)}
-                animate={{
-                  scale: isActive ? 1.1 : 1,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className={`w-14 h-14 rounded-xl glass border transition-all duration-300 flex items-center justify-center ${
-                  selectedNode === node.id
-                    ? 'border-cyber-lime shadow-[0_0_25px_rgba(173,255,47,0.7)]'
-                    : isActive
-                    ? 'border-cyber-lime shadow-[0_0_20px_rgba(173,255,47,0.5)]'
-                    : hasBeenActive
-                    ? 'border-primary/60 shadow-[0_0_10px_rgba(139,92,246,0.3)]'
-                    : 'border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)]'
+          {/* Nodes */}
+          {nodes.map((node) => (
+            <div
+              key={node.id}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
+              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              onClick={() => setSelectedNode(selectedNode === node.id ? null : node.id)}
+            >
+              <div className={`w-14 h-14 rounded-xl glass border transition-all duration-300 flex items-center justify-center ${
+                selectedNode === node.id
+                  ? 'border-cyber-lime shadow-[0_0_25px_rgba(173,255,47,0.7)]'
+                  : 'border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)]'
+              }`}>
+                {IconMap[node.icon]}
+              </div>
+              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                <span className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
+                  selectedNode === node.id ? 'bg-cyber-lime text-black' : 'bg-white/10 text-slate-300'
                 }`}>
-                  {IconMap[node.icon] || <span className="material-symbols-outlined text-white text-xl">{node.icon}</span>}
-                </div>
-                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
-                    selectedNode === node.id ? 'bg-cyber-lime text-black' :
-                    isActive ? 'bg-cyber-lime text-black' :
-                    hasBeenActive ? 'bg-primary/40 text-white' :
-                    'bg-white/10 text-slate-300'
-                  }`}>
-                    {node.label}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
+                  {node.label}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="mt-6 grid grid-cols-3 gap-4">

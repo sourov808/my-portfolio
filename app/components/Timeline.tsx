@@ -56,27 +56,7 @@ const IconMap: Record<string, React.ReactNode> = {
 
 export default function Timeline() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-100px" });
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
-  const slideFromLeft = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
-  };
-
-  const slideFromRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
-  };
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 1 } }
-  };
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="experience" className="py-24 relative">
@@ -85,9 +65,9 @@ export default function Timeline() {
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
           ref={ref}
-          variants={headerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2 flex items-center justify-center gap-3">
@@ -101,10 +81,9 @@ export default function Timeline() {
           {experiences.map((item, index) => (
             <motion.div
               key={index}
-              variants={index % 2 === 0 ? slideFromLeft : slideFromRight}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              transition={{ delay: 0.2 + index * 0.15 }}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
               className="glass-high-contrast group hover:border-cyber-lime hover:shadow-[0_0_20px_rgba(173,255,47,0.3)] transition-all duration-300 cursor-pointer"
             >
               <div className="p-6 flex items-start gap-4">
@@ -125,9 +104,9 @@ export default function Timeline() {
         </div>
 
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-8 glass-panel rounded-xl p-6"
         >
           <div className="flex items-center gap-3 mb-4">

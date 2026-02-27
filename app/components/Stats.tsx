@@ -12,42 +12,19 @@ const stats = [
 
 export default function Stats() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
-
-  const statVariants = {
-    hidden: { opacity: 0, scale: 0.8, rotate: -5 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      rotate: 0,
-      transition: { duration: 0.5, type: "spring", stiffness: 120 }
-    }
-  };
   return (
     <section id="stats" className="py-16 bg-[#101622]/30">
       <div className="max-w-7xl mx-auto px-6 md:px-20">
-        <motion.div
-          ref={ref}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              variants={statVariants}
-              whileHover={{ scale: 1.05, y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              whileHover={{ scale: 1.03 }}
               className={`glass hover:-translate-y-1 transition-all duration-300 hover:bg-white/10 group border-l-4 ${
                 stat.color === 'primary' ? 'border-l-primary' :
                 stat.color === 'cyber-lime' ? 'border-l-cyber-lime' : 'border-l-electric-blue'
@@ -73,14 +50,14 @@ export default function Stats() {
                       stat.color === 'cyber-lime' ? 'bg-cyber-lime' : 'bg-primary'
                     }`}
                     initial={{ width: 0 }}
-                    animate={isInView ? { width: `${Math.random() * 40 + 60}%` } : {}}
-                    transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
+                    animate={isInView ? { width: `${60 + index * 10}%` } : {}}
+                    transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
                   ></motion.div>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

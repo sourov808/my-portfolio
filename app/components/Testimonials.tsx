@@ -26,27 +26,7 @@ const testimonials = [
 
 export default function Testimonials() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-100px" });
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.6, type: "spring", stiffness: 100 }
-    }
-  };
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">
@@ -56,9 +36,9 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <h2 className="font-display font-black text-4xl text-white uppercase tracking-tight mb-2">
@@ -67,16 +47,13 @@ export default function Testimonials() {
           <p className="text-slate-400">Colleague endorsements</p>
         </motion.div>
 
-        <motion.div
-          className="grid md:grid-cols-3 gap-6"
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="glass-panel hover:-translate-y-1 transition-all duration-300 rounded-xl p-6"
             >
               <div className="flex items-center gap-3 mb-4">
@@ -95,7 +72,7 @@ export default function Testimonials() {
               </p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
