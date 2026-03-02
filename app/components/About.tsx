@@ -5,11 +5,41 @@ import { motion, useInView } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
 const skills = [
-  { name: 'Frontend', value: 85, icon: 'web' },
-  { name: 'Backend', value: 75, icon: 'dns' },
-  { name: 'Database', value: 70, icon: 'storage' },
-  { name: 'DevOps', value: 60, icon: 'cloud' },
+  { name: 'Frontend', value: 85, icon: 'frontend' },
+  { name: 'Backend', value: 75, icon: 'backend' },
+  { name: 'Database', value: 70, icon: 'database' },
+  { name: 'DevOps', value: 60, icon: 'devops' },
 ];
+
+const IconMap: Record<string, React.ReactNode> = {
+  frontend: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="#8b5cf6" strokeWidth="1.5">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+    </svg>
+  ),
+  backend: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="#8b5cf6" strokeWidth="1.5">
+      <rect x="4" y="2" width="16" height="6" rx="1"/>
+      <rect x="4" y="10" width="16" height="6" rx="1"/>
+      <rect x="4" y="18" width="16" height="6" rx="1"/>
+    </svg>
+  ),
+  database: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="#8b5cf6" strokeWidth="1.5">
+      <ellipse cx="12" cy="5" rx="8" ry="3"/>
+      <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+      <path d="M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7"/>
+    </svg>
+  ),
+  devops: (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="#8b5cf6" strokeWidth="1.5">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5"/>
+      <path d="M2 12l10 5 10-5"/>
+    </svg>
+  ),
+};
 
 export default function About() {
   const { isLight } = useTheme();
@@ -62,7 +92,7 @@ export default function About() {
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
                 >
-                  <span className="material-symbols-outlined text-primary">{skill.icon}</span>
+                  {IconMap[skill.icon]}
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1">
                       <span className={`text-sm ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>{skill.name}</span>

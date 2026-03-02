@@ -38,19 +38,21 @@ const IconMap: Record<string, React.ReactNode> = {
     </svg>
   ),
   react: (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#61DAFB">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#61DAFB" strokeWidth="1.5" fill="none"/>
+    <svg viewBox="0 0 24 24" className="w-6 h-6">
+      <circle cx="12" cy="12" r="2" fill="#61DAFB"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(30 12 12)"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(-30 12 12)"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(90 12 12)"/>
     </svg>
   ),
   web: (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#8b5cf6">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    <svg viewBox="0 0 24 24" className="w-6 h-6">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="#8b5cf6"/>
     </svg>
   ),
   deployment: (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#10b981">
-      <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 14h20v-4H2v4zm2-3h2v2H4v-2zm4-3V4l4 4-4 4v-3h-4v4h4zM10 8H6V4h4v4zm0 4H6v-4h4v4zm0 4H6v-4h4v4zm6-8v4l4-4-4-4v3h-4v4h4zM16 8h-4V4h4v4zm0 4h-4v-4h4v4zm0 4h-4v-4h4v4z"/>
+    <svg viewBox="0 0 24 24" className="w-6 h-6">
+      <path d="M19 12h2a9 9 0 11-9-9v2a7 7 0 107 7h2zM12 7V2l5 5-5 5V7H5V5h7z" fill="#10b981"/>
     </svg>
   ),
 };
@@ -61,7 +63,7 @@ export default function Timeline() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className={`py-24 relative ${isLight ? 'bg-gray-50' : ''}`}>
+    <section id="experience" className={`py-32 relative z-20 ${isLight ? 'bg-gray-50' : 'bg-[#0a0812]'}`}>
       <div className={`absolute inset-0 micro-graph ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+
 import { useTheme } from '../context/ThemeContext';
 
 const typingTexts = [
@@ -19,12 +19,6 @@ export default function Hero() {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   useEffect(() => {
     const currentText = typingTexts[textIndex];
@@ -58,89 +52,62 @@ export default function Hero() {
   }, [charIndex, isDeleting, textIndex]);
 
   return (
-    <section id="hero" className={`relative min-h-screen pt-9 overflow-hidden ${isLight ? 'bg-white' : 'mesh-gradient'}`}>
+    <section id="hero" className={`relative flex flex-col items-center justify-center min-h-[80vh] overflow-hidden ${isLight ? 'bg-white' : 'mesh-gradient'}`}>
       <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-20 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className={`border rounded-full px-4 py-2 mb-6 inline-flex items-center gap-2 ${isLight ? 'bg-gray-100 border-gray-200' : 'bg-black/40 border-primary/30'}`}>
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className={`font-mono text-xs ${isLight ? 'text-gray-700' : 'text-cyber-lime'}`}>$</span>
-              <span className={`font-mono text-xs ${isLight ? 'text-gray-900' : 'text-cyber-lime'}`}>{displayText}</span>
-              <span className={`animate-blink ${isLight ? 'text-gray-700' : 'text-cyber-lime'}`}>▋</span>
-            </div>
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 flex flex-col items-center text-center relative z-10">
+        <div className={`border rounded-full px-4 py-2 mb-6 inline-flex items-center gap-2 ${isLight ? 'bg-gray-100 border-gray-200' : 'bg-black/40 border-primary/30'}`}>
+          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span className={`font-mono text-xs ${isLight ? 'text-gray-700' : 'text-cyber-lime'}`}>$</span>
+          <span className={`font-mono text-xs ${isLight ? 'text-gray-900' : 'text-cyber-lime'}`}>{displayText}</span>
+          <span className={`animate-blink ${isLight ? 'text-gray-700' : 'text-cyber-lime'}`}>▋</span>
+        </div>
 
-            <h1 className={`font-display font-black text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none mb-6 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-              Full-Stack Developer<br />
-              <span className={isLight ? 'text-primary' : 'text-primary'}>Specializing in Scalable</span><br />
-              Web Applications
-            </h1>
+        <h1 className={`font-display font-black text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none mb-6 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+          Full-Stack Developer<br />
+          <span className={isLight ? 'text-primary' : 'text-primary'}>Specializing in Scalable</span><br />
+          Web Applications
+        </h1>
 
-            <p className={`text-lg mb-8 max-w-xl ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
-              I design and build high-performance web systems using modern frontend and backend technologies, with a strong focus on clean architecture and maintainability.
-            </p>
+        <p className={`text-lg md:text-xl mb-10 max-w-2xl ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
+          I design and build high-performance web systems using modern frontend and backend technologies, with a strong focus on clean architecture and maintainability.
+        </p>
 
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => scrollToSection('#projects')}
-                className="bg-primary hover:bg-primary/90 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]"
-              >
-                View Projects
-              </button>
-              <button
-                onClick={() => scrollToSection('#contact')}
-                className="border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary text-lg font-bold px-8 py-4 rounded-xl transition-all duration-200"
-              >
-                Contact Me
-              </button>
-            </div>
-          </div>
-
-          <div className={`rounded-2xl overflow-hidden relative ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass'}`}>
-            <div className={`border-b px-4 py-3 ${isLight ? 'bg-gray-50 border-gray-200' : 'bg-[#1e1b2e]/90 border-primary/20'}`}>
-              <span className={`font-mono text-xs uppercase tracking-widest ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>portfolio.exe</span>
-            </div>
-
-            <div className="relative h-80 flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-48 h-48 orbit-ring animate-spin-slow"></div>
-                <div className="w-36 h-36 orbit-ring animate-spin-reverse" style={{ animationDuration: '10s' }}></div>
-                <div className="w-24 h-24 orbit-ring animate-spin-slow" style={{ animationDuration: '15s' }}></div>
-              </div>
-
-              <div className="relative z-10 w-32 h-32 rounded-2xl bg-gradient-to-br from-primary to-electric-blue flex items-center justify-center shadow-[0_0_30px_rgba(139,92,246,0.5)]">
-                <span className="material-symbols-outlined text-white text-5xl">code</span>
-              </div>
-            </div>
-
-            <div className={`p-4 space-y-3 ${isLight ? 'border-t border-gray-200' : 'border-t border-white/5'}`}>
-              <div>
-                <div className="flex justify-between text-xs font-mono mb-1">
-                  <span className={isLight ? 'text-gray-500' : 'text-slate-400'}>ARCHITECTURE</span>
-                  <span className="text-cyber-lime">85%</span>
-                </div>
-                <div className={`h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-slate-800'}`}>
-                  <div
-                    className="h-full bg-gradient-to-r from-primary to-cyber-lime rounded-full shadow-[0_0_10px_rgba(139,92,246,0.6)]"
-                    style={{ width: '85%' }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-xs font-mono mb-1">
-                  <span className={isLight ? 'text-gray-500' : 'text-slate-400'}>LATENCY</span>
-                  <span className="text-green-500">12ms</span>
-                </div>
-                <div className={`h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-slate-800'}`}>
-                  <div
-                    className="h-full bg-gradient-to-r from-green-500 to-cyber-lime rounded-full shadow-[0_0_10px_rgba(34,197,94,0.6)]"
-                    style={{ width: '88%' }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Social Links */}
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <a
+            href="https://twitter.com" // Replace with actual X link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-black transition-all hover:scale-110"
+            aria-label="X (Twitter)"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a
+            href="https://github.com" // Replace with actual Github link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-[#333] transition-all hover:scale-110"
+            aria-label="GitHub"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+          </a>
+          <a
+            href="https://linkedin.com" // Replace with actual LinkedIn link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-[#0A66C2] transition-all hover:scale-110"
+            aria-label="LinkedIn"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
