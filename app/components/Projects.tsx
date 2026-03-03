@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import { Project, projectsData } from '../data/projects';
 
-function ProjectCard({ project, isLight, index, progress, isMobile }: { project: Project; isLight: boolean; index: number; progress: MotionValue<number>; isMobile: boolean }) {
+function ProjectCard({ project, isLight, index, progress }: { project: Project; isLight: boolean; index: number; progress: MotionValue<number> }) {
   const smoothProgress = useSpring(progress, { damping: 35, stiffness: 80, mass: 0.8 });
 
   const centers = [0.15, 0.50, 0.85];
@@ -125,7 +125,6 @@ function ProjectCard({ project, isLight, index, progress, isMobile }: { project:
 export default function Projects() {
   const { isLight } = useTheme();
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -188,7 +187,6 @@ export default function Projects() {
               isLight={isLight} 
               index={index} 
               progress={scrollYProgress}
-              isMobile={isMobile}
             />
           ))}
         </div>
