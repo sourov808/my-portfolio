@@ -1,208 +1,119 @@
 'use client';
 
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
-interface TechNode {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  layer: number;
-  color: string;
-}
-
-const techNodes: TechNode[] = [
-  { id: 'nextjs', label: 'Next.js', x: 50, y: 15, layer: 1, color: '#ffffff' },
-  { id: 'react', label: 'React', x: 25, y: 35, layer: 1, color: '#61DAFB' },
-  { id: 'typescript', label: 'TypeScript', x: 75, y: 35, layer: 1, color: '#3178C6' },
-  { id: 'tailwind', label: 'Tailwind', x: 15, y: 55, layer: 2, color: '#38BDF8' },
-  { id: 'redux', label: 'Redux', x: 40, y: 55, layer: 2, color: '#764ABC' },
-  { id: 'zustand', label: 'Zustand', x: 60, y: 55, layer: 2, color: '#764ABC' },
-  { id: 'node', label: 'Node.js', x: 85, y: 55, layer: 2, color: '#339933' },
-  { id: 'prisma', label: 'Prisma', x: 25, y: 80, layer: 3, color: '#58B6BE' },
-  { id: 'supabase', label: 'Supabase', x: 50, y: 80, layer: 3, color: '#3ECF8E' },
-  { id: 'postgresql', label: 'PostgreSQL', x: 75, y: 80, layer: 3, color: '#336791' },
+const principles = [
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+        <path d="M12 16a4 4 0 100-8 4 4 0 000 8z" />
+        <path d="M12 8a2 2 0 100-4 2 2 0 000 4z" />
+      </svg>
+    ),
+    title: 'Product-First Thinking',
+    description: 'I design solutions around real user needs and business goals.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M3 3v18h18" />
+        <path d="M7 16l4-8 4 6 5-10" />
+      </svg>
+    ),
+    title: 'Scalable System Design',
+    description: 'I build architectures that grow with users and data.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+      </svg>
+    ),
+    title: 'Performance Optimization',
+    description: 'Speed, efficiency, and responsiveness are core priorities.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M16 18l6-6-6-6" />
+        <path d="M8 6l-6 6 6 6" />
+      </svg>
+    ),
+    title: 'Clean & Maintainable Code',
+    description: 'Structured, readable, and future-proof implementation.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
+    ),
+    title: 'Reliable Deployment',
+    description: 'Stable infrastructure with continuous integration and monitoring.',
+  },
 ];
-
-const connections = [
-  { from: 'nextjs', to: 'react' },
-  { from: 'nextjs', to: 'typescript' },
-  { from: 'react', to: 'tailwind' },
-  { from: 'react', to: 'redux' },
-  { from: 'typescript', to: 'zustand' },
-  { from: 'typescript', to: 'node' },
-  { from: 'tailwind', to: 'prisma' },
-  { from: 'redux', to: 'prisma' },
-  { from: 'zustand', to: 'supabase' },
-  { from: 'node', to: 'postgresql' },
-  { from: 'prisma', to: 'supabase' },
-  { from: 'supabase', to: 'postgresql' },
-];
-
-function AnimatedConnection({ start, end, color }: { start: TechNode; end: TechNode; color: string }) {
-  return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" style={{ zIndex: 0 }}>
-      <defs>
-        <linearGradient id={`grad-${start.id}-${end.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={start.color} stopOpacity="0.6" />
-          <stop offset="100%" stopColor={end.color} stopOpacity="0.6" />
-        </linearGradient>
-      </defs>
-      <line
-        x1={`${start.x}%`}
-        y1={`${start.y}%`}
-        x2={`${end.x}%`}
-        y2={`${end.y}%`}
-        stroke={`url(#grad-${start.id}-${end.id})`}
-        strokeWidth="2"
-        strokeDasharray="8 4"
-        className="animate-pulse"
-      />
-      <circle r="4" fill={color} opacity="0.8">
-        <animateMotion
-          dur="2s"
-          repeatCount="indefinite"
-          path={`M${start.x},${start.y} L${end.x},${end.y}`}
-        />
-      </circle>
-    </svg>
-  );
-}
-
-function TechNodeComponent({ node }: { node: TechNode }) {
-  const { isLight } = useTheme();
-  
-  return (
-    <div
-      className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 group"
-      style={{
-        left: `${node.x}%`,
-        top: `${node.y}%`,
-        zIndex: 10,
-      }}
-    >
-      <div 
-        className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110`}
-        style={{
-          background: isLight 
-            ? `linear-gradient(135deg, ${node.color}20, ${node.color}10)`
-            : `radial-gradient(circle at 30% 30%, ${node.color}30, ${node.color}10)`,
-          border: `2px solid ${isLight ? '#e5e7eb' : `${node.color}50`}`,
-          boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-        }}
-      >
-        <span 
-          className="text-xs md:text-sm font-bold"
-          style={{ color: isLight ? '#374151' : '#e5e7eb' }}
-        >
-          {node.label.split(' ')[0]}
-        </span>
-        
-        <div 
-          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(circle at center, ${node.color}20 0%, transparent 70%)`,
-          }}
-        />
-      </div>
-      
-      <div 
-        className={`absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium transition-all duration-300 opacity-0 group-hover:opacity-100 ${
-          isLight ? 'text-gray-700' : 'text-white'
-        }`}
-      >
-        {node.label}
-      </div>
-    </div>
-  );
-}
-
-function ConnectionStats() {
-  const { isLight } = useTheme();
-  
-  return (
-    <div className={`mt-8 p-6 rounded-2xl border ${
-      isLight ? 'bg-white border-gray-200 shadow-lg' : 'glass border-white/10'
-    }`}>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div className="text-center">
-          <div className="text-2xl font-black text-primary">3</div>
-          <div className={`text-xs font-mono mt-1 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>LAYERS</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-black text-cyber-lime">10</div>
-          <div className={`text-xs font-mono mt-1 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>TECHNOLOGIES</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-black text-electric-blue">12</div>
-          <div className={`text-xs font-mono mt-1 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>CONNECTIONS</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-black text-green-500">100%</div>
-          <div className={`text-xs font-mono mt-1 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>TYPE SAFE</div>
-        </div>
-      </div>
-      
-      <div className={`mt-4 pt-4 border-t ${isLight ? 'border-gray-200' : 'border-white/10'}`}>
-        <div className="flex items-center justify-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-cyber-lime animate-pulse"></div>
-            <span className={`font-mono text-sm ${isLight ? 'text-green-600' : 'text-cyber-lime'}`}>
-              All Systems Operational
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function Playground() {
   const { isLight } = useTheme();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="architecture" className={`py-10 relative min-h-screen overflow-hidden ${isLight ? 'bg-gray-50' : 'bg-bg-primary'}`}>
-      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
+    <section id="how-i-build" className={`py-20 relative ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-30'}`}></div>
 
-      <div className="max-w-6xl mx-auto px-6 md:px-20 relative z-10">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className={`h-px w-12 ${isLight ? 'bg-gray-300' : 'bg-primary/50'}`}></div>
-            <span className={`text-xs font-mono uppercase tracking-widest ${isLight ? 'text-gray-500' : 'text-primary/70'}`}>System Design</span>
-            <div className={`h-px w-12 ${isLight ? 'bg-gray-300' : 'bg-primary/50'}`}></div>
-          </div>
-          <h2 className={`font-display font-black text-5xl md:text-6xl uppercase tracking-tight mb-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-            Architecture
+      <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className={`font-display font-black text-4xl md:text-5xl uppercase tracking-tight mb-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+            How I Build
           </h2>
-          <p className={`text-sm font-mono mt-2 ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>
-            Full-stack technology ecosystem visualization
+          <p className={`text-base md:text-lg max-w-2xl mx-auto ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
+            A structured approach to designing and delivering scalable digital products.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="relative" style={{ height: '450px' }}>
-          {connections.map((conn, i) => {
-            const start = techNodes.find(n => n.id === conn.from);
-            const end = techNodes.find(n => n.id === conn.to);
-            if (!start || !end) return null;
-            return (
-              <AnimatedConnection 
-                key={i} 
-                start={start} 
-                end={end} 
-                color={start.color}
-              />
-            );
-          })}
-
-          {techNodes.map((node) => (
-            <TechNodeComponent
-              key={node.id}
-              node={node}
-            />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {principles.map((principle, index) => (
+            <motion.div
+              key={principle.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
+              className={`group p-6 rounded-xl transition-all duration-300 hover:-translate-y-1 ${
+                isLight 
+                  ? 'bg-white border border-gray-200 hover:shadow-lg hover:border-gray-300' 
+                  : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/10'
+              }`}
+            >
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-colors ${
+                isLight 
+                  ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white' 
+                  : 'bg-primary/20 text-primary group-hover:bg-primary group-hover:text-white'
+              }`}>
+                {principle.icon}
+              </div>
+              <h3 className={`font-display font-bold text-lg mb-2 transition-colors ${
+                isLight ? 'text-gray-900 group-hover:text-primary' : 'text-white group-hover:text-primary'
+              }`}>
+                {principle.title}
+              </h3>
+              <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
+                {principle.description}
+              </p>
+            </motion.div>
           ))}
         </div>
-
-        <ConnectionStats />
       </div>
     </section>
   );

@@ -140,13 +140,14 @@ function ScrollColumn({
   isLight: boolean;
   className?: string;
 }) {
-  const baseY = useMotionValue(0);
+  const baseY = useMotionValue(-1);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   const isHoveredColumn = hoveredTech && techs.some((t) => t.name === hoveredTech);
   const pauseSpring = useSpring(1, { damping: 40, stiffness: 300 });
@@ -159,7 +160,9 @@ function ScrollColumn({
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        setContentHeight(entry.contentRect.height / 2);
+        const height = entry.contentRect.height / 3;
+        setContentHeight(height);
+        setIsReady(true);
       }
     });
     observer.observe(containerRef.current);
@@ -167,25 +170,25 @@ function ScrollColumn({
   }, []);
 
   useAnimationFrame((time, delta) => {
+    if (!isReady || contentHeight === 0) return;
+    
     let moveBy = speed * (delta / 1000);
-    // Accelerate drift when scrolling down (positive velocity), decelerate when scrolling up
     let addedVelocity = smoothVelocity.get() * -0.008;
     
-    // Reduce motion intensity heavily on mobile
     if (isMobile) {
       moveBy *= 0.5;
       addedVelocity *= 0.1;
     }
     
     moveBy += addedVelocity;
-    moveBy *= pauseSpring.get(); // smooth pause on hover
+    moveBy *= pauseSpring.get();
 
     let newY = baseY.get() + moveBy;
 
     if (contentHeight > 0) {
-      if (newY <= -contentHeight) {
+      if (newY <= -contentHeight + 50) {
         newY += contentHeight;
-      } else if (newY > 0) {
+      } else if (newY > 50) {
         newY -= contentHeight;
       }
     }
@@ -199,8 +202,8 @@ function ScrollColumn({
         style={{ y: baseY, transformStyle: 'preserve-3d' }}
         className="flex flex-col gap-8 md:gap-12 w-full items-center"
       >
-        {/* Render twice for seamless loop */}
-        {[...techs, ...techs].map((tech, i) => (
+        {/* Render 3 times for seamless infinite loop */}
+        {[...techs, ...techs, ...techs].map((tech, i) => (
           <TechItem
             key={`${tech.name}-${i}`}
             tech={tech}
@@ -241,7 +244,7 @@ export default function Skills() {
   ];
 
   // Base drifting speeds: each column slightly different
-  const columnSpeeds = [-12, -18, -10, -15];
+  const columnSpeeds = [-30, -45, -28, -38];
 
   return (
     <section

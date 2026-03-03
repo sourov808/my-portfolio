@@ -70,6 +70,29 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex justify-center"
+            >
+              <div className="relative">
+                <div className={`w-56 h-56 md:w-64 md:h-64 rounded-3xl overflow-hidden shadow-lg ${isLight ? 'shadow-gray-200/50' : 'shadow-purple-900/30'} ring-4 ${isLight ? 'ring-gray-100' : 'ring-purple-500/20'}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/pic.jpeg"
+                    alt="Sourov - Full Stack Developer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className={`absolute  w-full h-12 -bottom-3.5 border-none rounded-b-2xl  flex items-center justify-center ${isLight ? 'bg-black shadow-md' : 'bg-bg-secondary shadow-lg'} ring-2 ${isLight ? 'ring-gray-100' : 'ring-purple-500/30'}`}>
+                  <span className={`text-lg ${isLight ? 'text-primary' : 'text-primary'}`}>
+                    Hi, I am Sourov
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
             <div>
               <h3 className={`font-display font-bold text-2xl mb-4 flex items-center gap-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
                 Full-Stack Developer
@@ -77,12 +100,11 @@ export default function About() {
               <p className={`leading-relaxed mb-4 ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 I am a Full-Stack Developer specializing in building scalable web applications with modern technologies. With strong expertise in Next.js, React, and backend integration, I focus on creating clean, modular, and maintainable code.
               </p>
-              <p className={`leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
+              <p className={`leading-relaxed mb-6 ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 My approach combines technical precision with practical solutions, ensuring every project delivers real value and scales effectively.
               </p>
-            </div>
 
-            <div className="space-y-4">
+              <div className="space-y-4">
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
@@ -108,7 +130,9 @@ export default function About() {
                   </div>
                 </motion.div>
               ))}
+              </div>
             </div>
+            
           </div>
         </motion.div>
       </div>

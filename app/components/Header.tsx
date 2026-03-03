@@ -48,7 +48,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-5 md:px-20 py-3 md:py-4 flex items-center justify-between">
         <Logo 
           href="#hero"
-          height={28}
+          height={36}
           onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
         />
 

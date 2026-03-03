@@ -37,18 +37,47 @@ const socialLinksData = [
 export default function Contact() {
   const { isLight } = useTheme();
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [lastEmail, setLastEmail] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, isResend = false) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.subject || !formData.message) return;
 
     setStatus('sending');
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    setStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send');
+      }
+      
+      setStatus('success');
+      setLastEmail(formData.email);
+      
+      if (!isResend) {
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }
+    } catch (error) {
+      console.error('Email error:', error);
+      setStatus('error');
+    }
+  };
+
+  const handleResend = (e: React.FormEvent) => {
+    handleSubmit(e, true);
+  };
+
+  const resetForm = () => {
+    setStatus('idle');
+    setLastEmail('');
   };
 
   return (
@@ -145,11 +174,41 @@ export default function Contact() {
 
               <button
                 type="submit"
-                disabled={status !== 'idle' || !formData.name || !formData.email || !formData.subject || !formData.message}
+                disabled={status !== 'idle' && status !== 'success' && status !== 'error' || !formData.name || !formData.email || !formData.subject || !formData.message}
                 className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 md:py-3.5 rounded-lg transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 text-base"
               >
-                {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Send Message'}
+                {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : status === 'error' ? 'Failed - Try Again' : 'Send Message'}
               </button>
+
+              {(status === 'success' || status === 'error') && (
+                <div className="mt-4 p-4 rounded-lg text-center">
+                  <p className={`text-sm mb-3 ${status === 'success' ? (isLight ? 'text-green-600' : 'text-cyber-lime') : (isLight ? 'text-red-500' : 'text-red-400')}`}>
+                    {status === 'success' 
+                      ? `Message sent successfully to ${lastEmail}` 
+                      : 'Failed to send message. Please try again.'}
+                  </p>
+                  
+                  {status === 'success' && (
+                    <button
+                      type="button"
+                      onClick={handleResend}
+                      className="text-sm text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+                    >
+                      Resend to {lastEmail}
+                    </button>
+                  )}
+                  
+                  {status === 'error' && (
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="text-sm text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+                    >
+                      Try Again
+                    </button>
+                  )}
+                </div>
+              )}
             </form>
           </div>
         </div>
