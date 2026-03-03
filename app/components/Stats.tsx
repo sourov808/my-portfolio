@@ -17,8 +17,9 @@ export default function Stats() {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="stats" className={`py-16 ${isLight ? 'bg-white' : 'bg-[#101622]/30'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-20">
+    <section id="stats" className={`py-8 relative overflow-hidden ${isLight ? 'bg-white' : 'bg-bg-secondary/30'}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-20'}`}></div>
+      <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <motion.div

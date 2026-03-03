@@ -45,17 +45,20 @@ export default function Hero() {
         }, 50);
         return () => clearTimeout(timeout);
       } else {
-        setIsDeleting(false);
-        setTextIndex((textIndex + 1) % typingTexts.length);
+        const timeout = setTimeout(() => {
+          setIsDeleting(false);
+          setTextIndex((textIndex + 1) % typingTexts.length);
+        }, 50);
+        return () => clearTimeout(timeout);
       }
     }
   }, [charIndex, isDeleting, textIndex]);
 
   return (
-    <section id="hero" className={`relative flex flex-col items-center justify-center min-h-[80vh] overflow-hidden ${isLight ? 'bg-white' : 'mesh-gradient'}`}>
+    <section id="hero" className={`relative flex flex-col items-center justify-center min-h-[60vh] overflow-hidden ${isLight ? 'bg-white' : 'mesh-gradient'}`}>
       <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 flex flex-col items-center text-center relative z-10">
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-28 flex flex-col items-center text-center relative z-10">
         <div className={`border rounded-full px-4 py-2 mb-6 inline-flex items-center gap-2 ${isLight ? 'bg-gray-100 border-gray-200' : 'bg-black/40 border-primary/30'}`}>
           <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
           <span className={`font-mono text-xs ${isLight ? 'text-gray-700' : 'text-cyber-lime'}`}>$</span>

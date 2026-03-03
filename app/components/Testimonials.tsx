@@ -31,7 +31,8 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="testimonials" className={`py-24 relative overflow-hidden ${isLight ? 'bg-white' : ''}`}>
+    <section id="testimonials" className={`py-10 relative overflow-hidden ${isLight ? 'bg-white' : ''}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-20'}`}></div>
       <div className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl ${isLight ? 'bg-primary/10' : 'bg-primary/20'}`}></div>
       <div className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl ${isLight ? 'bg-electric-blue/10' : 'bg-electric-blue/20'}`}></div>
 
@@ -59,7 +60,7 @@ export default function Testimonials() {
               className={`${isLight ? 'bg-gray-50 border border-gray-200 shadow-sm' : 'glass-panel'} hover:-translate-y-1 transition-all duration-300 rounded-xl p-6`}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-electric-blue flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-electric-blue flex items-center justify-center">
                   <span className="text-white font-bold text-sm">{testimonial.avatar}</span>
                 </div>
                 <div>
@@ -70,7 +71,7 @@ export default function Testimonials() {
               </div>
 
               <p className={`text-sm italic leading-relaxed ${isLight ? 'text-gray-700' : 'text-slate-300'}`}>
-                "{testimonial.quote}"
+                &quot;{testimonial.quote}&quot;
               </p>
             </motion.div>
           ))}

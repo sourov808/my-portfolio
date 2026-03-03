@@ -47,8 +47,9 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className={`py-24 ${isLight ? 'bg-gray-50' : 'bg-[#101622]/30'}`}>
-      <div className="max-w-4xl mx-auto px-6 md:px-20">
+    <section id="about" className={`py-10 relative overflow-hidden ${isLight ? 'bg-gray-50' : 'bg-bg-secondary/30'}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-20'}`}></div>
+      <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
@@ -57,7 +58,6 @@ export default function About() {
           className="text-center mb-12"
         >
           <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-            <span className="material-symbols-outlined text-primary">person</span>
             About Me
           </h2>
           <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Professional background and focus</p>
@@ -72,7 +72,6 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className={`font-display font-bold text-2xl mb-4 flex items-center gap-2 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-                <span className="material-symbols-outlined text-primary">code</span>
                 Full-Stack Developer
               </h3>
               <p className={`leading-relaxed mb-4 ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
@@ -100,7 +99,7 @@ export default function About() {
                     </div>
                     <div className={`h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-slate-800'}`}>
                       <motion.div
-                        className="h-full bg-gradient-to-r from-primary to-cyber-lime rounded-full"
+                        className="h-full bg-linear-to-r from-primary to-cyber-lime rounded-full"
                         initial={{ width: 0 }}
                         animate={isInView ? { width: `${skill.value}%` } : {}}
                         transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}

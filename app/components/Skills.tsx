@@ -246,7 +246,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-40 relative min-h-[700px] h-screen overflow-hidden flex flex-col items-center justify-center isolate transition-colors duration-500"
+      className="py-16 relative min-h-[700px] h-screen overflow-hidden flex flex-col items-center justify-center isolate transition-colors duration-500"
       style={{ background: isLight ? '#f8fafc' : '#0f0f14', perspective: '1200px' }}
     >
       {/* Top/Bottom Fade Gradients */}

@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressContentEditableWarning>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-[#0a0812] text-slate-300 antialiased`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-bg-primary text-slate-300 antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           {children}
         </ThemeProvider>

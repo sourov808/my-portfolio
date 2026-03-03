@@ -161,8 +161,8 @@ export default function Playground() {
   const { isLight } = useTheme();
 
   return (
-    <section id="architecture" className={`py-24 relative min-h-screen overflow-hidden ${isLight ? 'bg-gray-50' : 'bg-[#0a0812]'}`}>
-      <div className={`absolute inset-0 ${isLight ? '' : 'simulation-grid'}`}></div>
+    <section id="architecture" className={`py-10 relative min-h-screen overflow-hidden ${isLight ? 'bg-gray-50' : 'bg-bg-primary'}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
       <div className="max-w-6xl mx-auto px-6 md:px-20 relative z-10">
         <div className="text-center mb-8">
@@ -180,7 +180,7 @@ export default function Playground() {
         </div>
 
         <div className="relative" style={{ height: '450px' }}>
-          {!isLight && connections.map((conn, i) => {
+          {connections.map((conn, i) => {
             const start = techNodes.find(n => n.id === conn.from);
             const end = techNodes.find(n => n.id === conn.to);
             if (!start || !end) return null;

@@ -58,20 +58,19 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className={`py-24 relative ${isLight ? 'bg-gray-50' : ''}`}>
-      <div className={`absolute inset-0 micro-graph ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
+    <section id="contact" className={`py-10 relative ${isLight ? 'bg-gray-50' : ''}`}>
+      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
 
       <div className="max-w-3xl mx-auto px-6 md:px-20 relative z-10">
         <div className="text-center mb-8">
           <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-            <span className="material-symbols-outlined text-primary">mail</span>
             Contact
           </h2>
           <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>Send me a message</p>
         </div>
 
         <div className={`rounded-2xl overflow-hidden ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}>
-          <div className={`border-b px-4 py-2 ${isLight ? 'bg-gray-50 border-gray-200' : 'bg-[#1e1b2e]/90 border-primary/20'}`}>
+          <div className={`border-b px-4 py-2 ${isLight ? 'bg-gray-50 border-gray-200' : 'bg-slate-custom/90 border-primary/20'}`}>
             <span className={`font-mono text-xs uppercase tracking-widest ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>contact.ts</span>
           </div>
 

@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import Logo from './Logo';
 
 const navLinks = [
   { href: '#hero', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+ 
 ];
 
 export default function Header() {
@@ -42,21 +43,12 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled
-        ? isLight
-          ? 'bg-white/90 backdrop-blur-md border-b border-gray-200'
-          : 'bg-[#0a0812]/90 backdrop-blur-md border-b border-primary/20'
-        : ''
-    }`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? (isLight ? 'bg-white/90 shadow-sm' : 'bg-bg-primary/90 shadow-lg border-b border-white/5') : 'bg-transparent'} backdrop-blur-md`}>
       <div className="max-w-7xl mx-auto px-6 md:px-20 py-4 flex items-center justify-between">
-        <a
+        <Logo 
           href="#hero"
           onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
-          className="flex flex-col group"
-        >
-          <span className={`font-display font-bold text-lg ${isLight ? 'text-gray-900' : 'text-white'}`}>Sourov Das</span>
-        </a>
+        />
 
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
@@ -106,7 +98,7 @@ export default function Header() {
                 : 'bg-primary hover:bg-primary/90 text-white hover:scale-105'
             }`}
           >
-            Hire Me
+            Contact Me
           </button>
         </div>
       </div>

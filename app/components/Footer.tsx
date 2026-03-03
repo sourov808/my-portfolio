@@ -65,7 +65,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className={`text-sm ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
-              © 2026 Sourov Das. All Rights Reserved.
+              © {new Date().getFullYear()} Sourov Das. All Rights Reserved.
             </p>
             <p className={`font-mono text-xs mt-1 ${isLight ? 'text-gray-500' : 'text-slate-600'}`}>
               System Status: Production | Architecture: Modular & Scalable
