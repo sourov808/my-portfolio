@@ -79,9 +79,12 @@ export function CodeBlock({ stack, progress, isLight }: { stack: string[]; progr
   const defaultProgress = useMotionValue(0);
   const activeProgress = progress || defaultProgress;
   
-  // If progress is entirely missing, keep static defaults, else map with useTransform
-  const opacity = progress ? useTransform(activeProgress, [0, 0.3, 0.7, 1], [1, 1, 0.5, 0.2]) : 1;
-  const y = progress ? useTransform(activeProgress, [0, 0.3, 0.7, 1], [0, 0, 10, 20]) : 0;
+  // Always call useTransform to obey React Hook rules
+  const opacityTransform = useTransform(activeProgress, [0, 0.3, 0.7, 1], [1, 1, 0.5, 0.2]);
+  const yTransform = useTransform(activeProgress, [0, 0.3, 0.7, 1], [0, 0, 10, 20]);
+  
+  const opacity = progress ? opacityTransform : 1;
+  const y = progress ? yTransform : 0;
 
   return (
     <motion.div 

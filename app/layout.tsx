@@ -16,8 +16,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Developer Portfolio | Command Center",
-  description: "Interactive developer portfolio with cyberpunk terminal aesthetic",
+  title: "Sourov | Full-Stack Developer",
+  description: "Full-stack developer specializing in scalable web applications, modern interfaces, and clean code.",
 };
 
 export default function RootLayout({
@@ -27,6 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressContentEditableWarning>
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} bg-bg-primary text-slate-300 antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           {children}

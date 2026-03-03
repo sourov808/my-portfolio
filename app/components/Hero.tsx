@@ -3,14 +3,8 @@
 import { useEffect, useState } from 'react';
 
 import { useTheme } from '../context/ThemeContext';
-
-const typingTexts = [
-  'Full-Stack Developer',
-  'Available for Work',
-  'React Developer',
-  'Next.js Expert',
-  'TypeScript Developer',
-];
+import { typingTexts } from '../constants/typingTexts';
+import { socialLinks } from '../constants/socialLinks';
 
 export default function Hero() {
   const { isLight } = useTheme();
@@ -79,7 +73,7 @@ export default function Hero() {
         {/* Social Links */}
         <div className="flex items-center justify-center gap-6 mt-4">
           <a
-            href="https://twitter.com" // Replace with actual X link
+            href={socialLinks.x}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-black transition-all hover:scale-110"
@@ -90,7 +84,7 @@ export default function Hero() {
             </svg>
           </a>
           <a
-            href="https://github.com" // Replace with actual Github link
+            href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-[#333] transition-all hover:scale-110"
@@ -101,7 +95,7 @@ export default function Hero() {
             </svg>
           </a>
           <a
-            href="https://linkedin.com" // Replace with actual LinkedIn link
+            href={socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-[#0A66C2] transition-all hover:scale-110"

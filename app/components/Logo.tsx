@@ -4,9 +4,9 @@ import Link from 'next/link';
 import localFont from 'next/font/local';
 import { useTheme } from '../context/ThemeContext';
 
-const fontogradFont = localFont({ 
-  src: '../fonts/fontograd.ttf',
-  variable: '--font-fontograd'
+const vastrexFont = localFont({ 
+  src: '../fonts/vastrex-demo.regular.otf',
+  variable: '--font-vastrex'
 });
 
 interface LogoProps {
@@ -17,12 +17,24 @@ interface LogoProps {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export default function Logo({ className = '', href = '/', onClick }: LogoProps) {
+export default function Logo({ className = '', href = '/', onClick, width, height }: LogoProps) {
   const { isLight } = useTheme();
 
+  const sizeStyle = (() => {
+    if (width && height) return { width, height };
+    if (height) return { height };
+    return { fontSize: '32px' };
+  })();
+
   return (
-    <Link href={href} onClick={onClick} className={`inline-block ${className} ${fontogradFont.className} text-3xl tracking-wide lowercase`}>
-      <span className={isLight ? 'text-black' : 'text-white'}>sourov</span>
+    <Link 
+      href={href} 
+      onClick={onClick} 
+      style={sizeStyle}
+      className={`inline-block ${className} ${vastrexFont.className} font-bold tracking-tight lowercase flex items-center`}
+    >
+      <span className={isLight ? 'text-[#0F0F14]' : 'text-[#F3F4F6]'}>sourov</span>
+      <span className="text-primary">.</span>
     </Link>
   );
 }

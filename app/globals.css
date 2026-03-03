@@ -17,6 +17,11 @@
   --foreground: #f6f5f8;
 }
 
+.light-theme {
+  --background: #ffffff;
+  --foreground: #0F0F14;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #8b5cf6 #1e1b2e;
