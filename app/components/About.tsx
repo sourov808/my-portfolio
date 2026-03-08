@@ -8,7 +8,7 @@ const skills = [
   { name: 'Frontend', value: 85, icon: 'frontend' },
   { name: 'Backend', value: 75, icon: 'backend' },
   { name: 'Database', value: 70, icon: 'database' },
-  { name: 'DevOps', value: 60, icon: 'devops' },
+  // { name: 'DevOps', value: 40, icon: 'devops' },
 ];
 
 const IconMap: Record<string, React.ReactNode> = {

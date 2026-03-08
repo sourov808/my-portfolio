@@ -5,17 +5,3 @@ export const socialLinks = {
   email: '',
 };
 
-export const socialLinksArray = [
-  {
-    label: 'GitHub',
-    href: socialLinks.github,
-  },
-  {
-    label: 'LinkedIn',
-    href: socialLinks.linkedin,
-  },
-  {
-    label: 'X (Twitter)',
-    href: socialLinks.x,
-  },
-];

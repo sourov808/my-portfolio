@@ -14,11 +14,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      setIsLight(saved === 'light');
-    }
+    // Avoids synchronous setState warning causing cascading renders
+    const timer = setTimeout(() => {
+      setMounted(true);
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        setIsLight(saved === 'light');
+      }
+    }, 0);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleTheme = () => {

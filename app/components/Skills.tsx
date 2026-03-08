@@ -244,7 +244,7 @@ export default function Skills() {
   ];
 
   // Base drifting speeds: each column slightly different
-  const columnSpeeds = [-30, -45, -28, -38];
+  const columnSpeeds = [-70, -65, -58, -48];
 
   return (
     <section

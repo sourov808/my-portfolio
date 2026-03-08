@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const data = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: process.env.CONTACT_EMAIL || 'sourovsd0009@gmail.com',
       subject: `Portfolio: ${subject} - from ${name}`,
@@ -45,11 +45,19 @@ ${message}
       `.trim(),
     });
 
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        { error: error.message || 'Failed to send email' },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error('Email send error:', error);
+    console.error('Contact API error:', error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'An unexpected error occurred' },
       { status: 500 }
     );
   }
