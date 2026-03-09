@@ -18,6 +18,20 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Sourov | Full-Stack Developer",
   description: "Full-stack developer specializing in scalable web applications, modern interfaces, and clean code.",
+  keywords: ["Full-Stack Developer", "React", "Next.js", "TypeScript", "Node.js", "Portfolio", "Software Engineer"],
+  authors: [{ name: "Sourov" }],
+  openGraph: {
+    title: "Sourov | Full-Stack Developer",
+    description: "Full-stack developer specializing in scalable web applications, modern interfaces, and clean code.",
+    url: "https://sourov.dev", // Replace with your actual domain
+    siteName: "Sourov's Portfolio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sourov | Full-Stack Developer",
+    description: "Full-stack developer specializing in scalable web applications, modern interfaces, and clean code.",
+  },
 };
 
 export default function RootLayout({
