@@ -56,6 +56,4 @@ To personalize this portfolio:
 2. Edit the components in `app/components/` (like `Hero.tsx`, `About.tsx`, `Projects.tsx`) with your own information and images.
 3. Update brand colors in `tailwind.config.ts` or `app/globals.css`.
 
-## 📜 License
 
-This project is open-source and free to use.
