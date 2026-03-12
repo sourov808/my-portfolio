@@ -32,7 +32,7 @@ export default function AllProjects() {
   }, [selectedProject]);
 
   return (
-    <div className={`min-h-screen pt-32 pb-20 px-6 md:px-12 transition-colors duration-700 relative ${isLight ? 'bg-[#f7f7f9] text-gray-900' : 'bg-[#0f0f14] text-white'}`}>
+    <div className={`min-h-screen pt-10 pb-20 px-6 md:px-12 transition-colors duration-700 relative ${isLight ? 'bg-[#f7f7f9] text-gray-900' : 'bg-[#0f0f14] text-white'}`}>
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20">
           <Link 
@@ -65,10 +65,10 @@ export default function AllProjects() {
               }`}
             >
               {/* Card Image Banner */}
-              <div className="w-full aspect-4/3 relative overflow-hidden bg-gray-100 dark:bg-[#1c1c24]">
+              <div className="w-full aspect-4/3  relative overflow-hidden bg-gray-100 dark:bg-[#1c1c24]">
                 {project.image ? (
                    <div 
-                      className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 ease-out"
+                      className="absolute inset-0   w-full h-full bg-cover bg-center transition-transform duration-700 ease-out"
                       style={{ backgroundImage: `url(${getImageUrl(project.image)})` }}
                    />
                 ) : (

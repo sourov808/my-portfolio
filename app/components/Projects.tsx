@@ -171,7 +171,7 @@ export default function Projects() {
         style={{ opacity: titleOpacity, pointerEvents: titlePointerEvents }}
       >
         <h2 className={`font-display font-medium text-3xl md:text-5xl tracking-tight transition-colors duration-700 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-          Selected Projects
+           Projects
         </h2>
         <p className={`text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-4 md:mt-6 transition-colors ${isLight ? 'text-gray-600' : 'text-gray-400'}`}>
           A curated collection of product-focused applications built with performance, scalability, and thoughtful design in mind.
