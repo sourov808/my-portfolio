@@ -44,7 +44,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-bg-primary text-slate-300 antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-bg-primary text-slate-300 antialiased`}  >
         <ThemeProvider>
           {children}
         </ThemeProvider>

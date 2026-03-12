@@ -1,19 +1,17 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useSpring, useScroll, useVelocity, useAnimationFrame, AnimatePresence, useMotionValue } from 'framer-motion';
+import Image from 'next/image';
+import { motion, useInView, useSpring, useAnimationFrame, useScroll, useVelocity, MotionValue } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
 const technologies = [
-  // Frontend
   { name: 'React', logo: '/logos/react.svg' },
   { name: 'Next.js', logo: '/logos/nextjs.svg' },
   { name: 'TypeScript', logo: '/logos/typescript.svg' },
   { name: 'JavaScript', logo: '/logos/javascript.svg' },
   { name: 'Tailwind CSS', logo: '/logos/tailwindcss.svg' },
   { name: 'Redux', logo: '/logos/redux.svg' },
-
-  // Backend / Infra
   { name: 'Node.js', logo: '/logos/nodejs.svg' },
   { name: 'Express', logo: '/logos/express.svg' },
   { name: 'PostgreSQL', logo: '/logos/postgresql.svg' },
@@ -23,8 +21,6 @@ const technologies = [
   { name: 'Redis', logo: '/logos/redis.svg' },
   { name: 'Docker', logo: '/logos/docker.svg' },
   { name: 'WebSockets', logo: '/logos/websockets.svg' },
-
-  // Dev Tools
   { name: 'Git', logo: '/logos/git.svg' },
   { name: 'GitHub', logo: '/logos/github.svg' },
   { name: 'Vercel', logo: '/logos/vercel.svg' },
@@ -32,229 +28,222 @@ const technologies = [
   { name: 'Figma', logo: '/logos/figma.svg' },
 ];
 
-function TechItem({
+function OrbitingIcon({
   tech,
-  index,
-  isHovered,
-  isDimmed,
-  onHoverStart,
-  onHoverEnd,
-  isMobile,
+  orbitRadius,
+  angle,
+  speed,
+  hoveredTech,
+  setHoveredTech,
   isLight,
+  scrollVelocity,
 }: {
   tech: typeof technologies[0];
-  index: number;
-  isHovered: boolean;
-  isDimmed: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
-  isMobile: boolean;
+  orbitRadius: number;
+  angle: number;
+  speed: number;
+  hoveredTech: string | null;
+  setHoveredTech: (t: string | null) => void;
   isLight: boolean;
+  scrollVelocity: MotionValue<number>;
 }) {
-  const scale = useSpring(isHovered ? (isMobile ? 1.03 : 1.05) : 1, { stiffness: 400, damping: 25 });
-  const opacity = useSpring(isHovered ? 1 : isDimmed ? 0.65 : 0.85, { stiffness: 300, damping: 30 });
-  const z = useSpring(isHovered ? (isMobile ? 10 : 30) : 0, { stiffness: 400, damping: 25 });
+  const angleRef = useRef(angle);
+  const [currentAngle, setCurrentAngle] = useState(angle);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const floatDuration = isMobile ? 0 : 3 + (index % 4) * 0.5;
-  const floatDelay = isMobile ? 0 : (index % 5) * 0.2;
-  const floatOffset = isMobile ? 0 : (index % 2 === 0) ? -4 : 4;
+  const isHoveredThis = hoveredTech === tech.name || isHovered;
+  const scale = useSpring(isHoveredThis ? 1.4 : 1, { stiffness: 400, damping: 25 });
+
+  useAnimationFrame((_, delta) => {
+    if (!isHoveredThis) {
+      const velocity = scrollVelocity.get();
+      angleRef.current += (speed + velocity * 0.0004) * (delta / 1000);
+      setCurrentAngle(angleRef.current);
+    }
+  });
+
+  const x = Math.cos(currentAngle) * orbitRadius;
+  const y = Math.sin(currentAngle) * orbitRadius;
+  const z = Math.sin(currentAngle) * orbitRadius;
+  const isInFront = z > 0;
+  const opacity = isInFront ? 1 : 0.65;
 
   return (
     <motion.div
-      className="relative flex flex-col items-center justify-center p-8 h-44 w-full cursor-default isolate"
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-      style={{ opacity, scale, z, transformStyle: 'preserve-3d' }}
+      className="absolute cursor-pointer"
+      style={{
+        x,
+        y,
+        z,
+        scale,
+        zIndex: isHoveredThis ? 100 : 1,
+        transformStyle: 'preserve-3d',
+        opacity,
+      }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        setHoveredTech(tech.name);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setHoveredTech(null);
+      }}
+      suppressHydrationWarning
     >
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            className="absolute inset-0 rounded-full z-0 pointer-events-none"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: isMobile ? 1.2 : 1.5 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              background: `radial-gradient(circle at center, ${isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.08)'} 0%, transparent 60%)`,
-            }}
-          />
-        )}
-      </AnimatePresence>
-
-      <motion.div
-        className="relative z-10 flex items-center justify-center w-16 h-16"
-        animate={isHovered ? { y: 0 } : { y: [0, floatOffset, 0, -floatOffset, 0] }}
-        transition={isMobile ? {} : { duration: floatDuration, repeat: Infinity, ease: 'easeInOut', delay: floatDelay }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+        isLight ? 'bg-white/40 backdrop-blur-sm' : 'bg-white/5'
+      }`}>
+        <Image
           src={tech.logo}
           alt={tech.name}
-          className="max-h-[48px] max-w-[48px] object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
-          loading="lazy"
+          width={36}
+          height={36}
+          className="object-contain"
+          unoptimized
         />
-      </motion.div>
-
-      <div className="absolute top-[80%] left-0 right-0 flex pointer-events-none overflow-hidden h-8">
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              exit={{ y: '100%' }}
-              transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="flex flex-col items-center justify-start pt-1 w-full"
-            >
-              <span className={`text-[11px] md:text-xs font-semibold tracking-wide drop-shadow-md whitespace-nowrap transition-colors duration-500 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {tech.name}
-              </span>
-              <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '80%', opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.05 }}
-                className={`h-px mt-1 transition-colors duration-500 ${isLight ? 'bg-slate-400' : 'bg-slate-300'}`}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+      {isHoveredThis && (
+        <motion.span
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`text-xs font-semibold whitespace-nowrap px-2 py-0.5 rounded-full absolute -bottom-6 ${
+            isLight ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'
+          }`}
+        >
+          {tech.name}
+        </motion.span>
+      )}
     </motion.div>
   );
 }
 
-function ScrollColumn({
-  techs,
+function OrbitRing({
+  radius,
+  technologies: techs,
   speed,
   hoveredTech,
   setHoveredTech,
-  isMobile,
   isLight,
-  className,
+  scrollVelocity,
 }: {
-  techs: typeof technologies;
+  radius: number;
+  technologies: typeof technologies;
   speed: number;
   hoveredTech: string | null;
   setHoveredTech: (t: string | null) => void;
-  isMobile: boolean;
   isLight: boolean;
-  className?: string;
+  scrollVelocity: MotionValue<number>;
 }) {
-  const baseY = useMotionValue(-1);
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-  
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState(0);
-  const [isReady, setIsReady] = useState(false);
-
-  const isHoveredColumn = hoveredTech && techs.some((t) => t.name === hoveredTech);
-  const pauseSpring = useSpring(1, { damping: 40, stiffness: 300 });
-
-  useEffect(() => {
-    pauseSpring.set(isHoveredColumn ? 0 : 1);
-  }, [isHoveredColumn, pauseSpring]);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const height = entry.contentRect.height / 3;
-        setContentHeight(height);
-        setIsReady(true);
-      }
-    });
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useAnimationFrame((time, delta) => {
-    if (!isReady || contentHeight === 0) return;
-    
-    let moveBy = speed * (delta / 1000);
-    let addedVelocity = smoothVelocity.get() * -0.008;
-    
-    if (isMobile) {
-      moveBy *= 0.5;
-      addedVelocity *= 0.1;
-    }
-    
-    moveBy += addedVelocity;
-    moveBy *= pauseSpring.get();
-
-    let newY = baseY.get() + moveBy;
-
-    if (contentHeight > 0) {
-      if (newY <= -contentHeight + 50) {
-        newY += contentHeight;
-      } else if (newY > 50) {
-        newY -= contentHeight;
-      }
-    }
-    baseY.set(newY);
-  });
-
   return (
-    <div className={`flex flex-col items-center flex-1 ${className || ''}`} style={{ minWidth: isMobile ? '70px' : '140px' }}>
-      <motion.div
-        ref={containerRef}
-        style={{ y: baseY, transformStyle: 'preserve-3d' }}
-        className="flex flex-col gap-8 md:gap-12 w-full items-center"
-      >
-        {/* Render 3 times for seamless infinite loop */}
-        {[...techs, ...techs, ...techs].map((tech, i) => (
-          <TechItem
-            key={`${tech.name}-${i}`}
-            tech={tech}
-            index={i}
-            isHovered={hoveredTech === tech.name}
-            isDimmed={hoveredTech !== null && hoveredTech !== tech.name}
-            onHoverStart={() => setHoveredTech(tech.name)}
-            onHoverEnd={() => setHoveredTech(null)}
-            isMobile={isMobile}
-            isLight={isLight}
-          />
-        ))}
-      </motion.div>
+    <div className="absolute" style={{ transform: `translateZ(0px)` }}>
+      {techs.map((tech, i) => (
+        <OrbitingIcon
+          key={tech.name}
+          tech={tech}
+          orbitRadius={radius}
+          angle={(i / techs.length) * Math.PI * 2}
+          speed={speed}
+          hoveredTech={hoveredTech}
+          setHoveredTech={setHoveredTech}
+          isLight={isLight}
+          scrollVelocity={scrollVelocity}
+        />
+      ))}
     </div>
   );
 }
 
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const titleRef = useRef(null);
+  const isInView = useInView(titleRef, { once: true, margin: '-100px' });
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.innerWidth >= 768;
+  });
   const { isLight } = useTheme();
 
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 300 });
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
-  // Split items into 4 vertical columns robustly
-  const columns = [
-    technologies.filter((_, i) => i % 4 === 0),
-    technologies.filter((_, i) => i % 4 === 1),
-    technologies.filter((_, i) => i % 4 === 2),
-    technologies.filter((_, i) => i % 4 === 3),
-  ];
+  const innerTechs = technologies.slice(0, 6);
+  const middleTechs = technologies.slice(6, 13);
+  const outerTechs = technologies.slice(13);
 
-  // Base drifting speeds: each column slightly different
-  const columnSpeeds = [-70, -60, -55, -50];
+  const innerRadius = isDesktop ? 90 : 50;
+  const middleRadius = isDesktop ? 170 : 90;
+  const outerRadius = isDesktop ? 250 : 130;
 
   return (
     <section
       id="skills"
-      className="py-16 relative min-h-[700px] h-screen overflow-hidden flex flex-col items-center justify-center isolate transition-colors duration-500"
-      style={{ background: isLight ? '#f8fafc' : '#0f0f14', perspective: '1200px' }}
+      className="py-16 relative min-h-screen h-screen overflow-hidden flex flex-col items-center justify-center isolate transition-colors duration-500"
+      style={{ 
+        background: isLight ? '#f8fafc' : '#0f0f14',
+        perspective: '1000px',
+      }}
     >
-      {/* Top/Bottom Fade Gradients */}
+      <motion.div
+        ref={titleRef}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        className="absolute top-12 md:top-24 left-0 right-0 z-30 flex flex-col items-center text-center px-6"
+      >
+        <h2 className={`font-display font-black text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight mb-2 drop-shadow-lg transition-colors duration-500 ${
+          isLight ? 'text-slate-900' : 'text-white'
+        }`}>
+          TECH STACK
+        </h2>
+        <p className={`font-mono text-xs md:text-sm tracking-widest uppercase drop-shadow-md transition-colors duration-500 ${
+          isLight ? 'text-slate-500' : 'text-slate-400'
+        }`}>
+          Technologies I Work With
+        </p>
+      </motion.div>
+
+      <div className="absolute inset-0 mt-16 md:mt-24 flex items-center justify-center">
+        <div className="relative" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
+          <OrbitRing
+            radius={innerRadius}
+            technologies={innerTechs}
+            speed={0.35}
+            hoveredTech={hoveredTech}
+            setHoveredTech={setHoveredTech}
+            isLight={isLight}
+            scrollVelocity={smoothVelocity}
+          />
+          <OrbitRing
+            radius={middleRadius}
+            technologies={middleTechs}
+            speed={-0.28}
+            hoveredTech={hoveredTech}
+            setHoveredTech={setHoveredTech}
+            isLight={isLight}
+            scrollVelocity={smoothVelocity}
+          />
+          <OrbitRing
+            radius={outerRadius}
+            technologies={outerTechs}
+            speed={0.22}
+            hoveredTech={hoveredTech}
+            setHoveredTech={setHoveredTech}
+            isLight={isLight}
+            scrollVelocity={smoothVelocity}
+          />
+        </div>
+      </div>
+
       <div 
-        className="absolute inset-x-0 top-0 h-40 z-40 pointer-events-none transition-colors duration-500" 
+        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none transition-colors duration-500" 
         style={{
           background: isLight 
             ? 'linear-gradient(to bottom, #f8fafc, rgba(248,250,252,0.9), transparent)' 
@@ -262,50 +251,13 @@ export default function Skills() {
         }}
       />
       <div 
-        className="absolute inset-x-0 bottom-0 h-40 z-40 pointer-events-none transition-colors duration-500" 
+        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none transition-colors duration-500" 
         style={{
           background: isLight 
             ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.9), transparent)' 
             : 'linear-gradient(to top, #0f0f14, rgba(15,15,20,0.9), transparent)'
         }}
       />
-
-      {/* Static Header Elements */}
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="absolute top-24 md:top-36 left-0 right-0 z-30 flex flex-col items-center text-center px-6 pointer-events-none"
-      >
-        <h2 className={`font-display font-black text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight mb-4 drop-shadow-lg transition-colors duration-500 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-          TECH STACK
-        </h2>
-        <p className={`font-mono text-xs md:text-sm tracking-widest uppercase drop-shadow-md transition-colors duration-500 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-          Technologies I Work With
-        </p>
-      </motion.div>
-
-      {/* Drifting System */}
-      <div 
-        className="w-full max-w-7xl mx-auto flex justify-center gap-0 md:gap-4 lg:gap-8 h-[140%] -mt-[15%] pt-32 px-2 md:px-8 opacity-95 transition-transform duration-1000 ease-out z-10"
-        style={{
-          transform: isMobile ? 'none' : 'rotateX(8deg) scale(1.05)',
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        {columns.map((techs, i) => (
-          <ScrollColumn
-            key={i}
-            techs={techs}
-            speed={columnSpeeds[i]}
-            hoveredTech={hoveredTech}
-            setHoveredTech={setHoveredTech}
-            isMobile={isMobile}
-            isLight={isLight}
-          />
-        ))}
-      </div>
     </section>
   );
 }

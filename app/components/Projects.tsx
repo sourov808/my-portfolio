@@ -163,11 +163,11 @@ export default function Projects() {
     <motion.section 
       ref={sectionRef}
       id="projects" 
-      className={`relative w-full pb-16 md:py-20 transition-colors duration-700`}
+      className={`relative w-full pb-16 md:py-10 transition-colors duration-700`}
       style={{ backgroundColor: bgShift }}
     >
       <motion.div 
-        className="max-w-[1400px] mx-auto px-5 md:px-12 text-center pt-24 md:pt-32 pb-4 md:sticky md:top-0"
+        className="max-w-[1400px] mx-auto px-5 md:px-12 text-center pt-10 md:pt-32 pb-4 md:sticky md:top-0"
         style={{ opacity: titleOpacity, pointerEvents: titlePointerEvents }}
       >
         <h2 className={`font-display font-medium text-3xl md:text-5xl tracking-tight transition-colors duration-700 ${isLight ? 'text-gray-900' : 'text-white'}`}>
@@ -202,13 +202,15 @@ export default function Projects() {
         >
           <Link
             href="/projects"
-            className={`inline-flex items-center justify-center px-8 py-4 md:py-3 rounded-full text-base font-medium transition-all duration-500 ease-out ${
+            className={`inline-flex items-center justify-center px-8 py-4 md:py-3 rounded-full text-base font-medium transition-all duration-500 ease-out group ${
               isLight 
                 ? 'bg-gray-900 text-white hover:bg-gray-800 hover:scale-[1.02]' 
                 : 'bg-white text-gray-900 hover:bg-gray-100 hover:scale-[1.02]'
             }`}
           >
             View All Projects
+
+            <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300"> {"->"} </span>
           </Link>
         </motion.div>
       </div>
