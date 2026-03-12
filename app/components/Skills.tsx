@@ -185,9 +185,11 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-16 relative min-h-screen h-screen overflow-hidden flex flex-col items-center justify-center isolate transition-colors duration-500"
+      className="py-16 relative min-h-screen h-screen overflow-hidden flex flex-col items-center justify-center isolate"
       style={{ 
-        background: isLight ? '#f8fafc' : '#0f0f14',
+        background: isLight 
+          ? 'radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 100%)'
+          : '#0f172a',
         perspective: '1000px',
       }}
     >
@@ -243,19 +245,19 @@ export default function Skills() {
       </div>
 
       <div 
-        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none transition-colors duration-500" 
+        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none" 
         style={{
           background: isLight 
-            ? 'linear-gradient(to bottom, #f8fafc, rgba(248,250,252,0.9), transparent)' 
-            : 'linear-gradient(to bottom, #0f0f14, rgba(15,15,20,0.9), transparent)'
+            ? 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.8), transparent)' 
+            : 'linear-gradient(to bottom, #0f172a, rgba(15,23,42,0.9), transparent)'
         }}
       />
       <div 
-        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none transition-colors duration-500" 
+        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none" 
         style={{
           background: isLight 
-            ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.9), transparent)' 
-            : 'linear-gradient(to top, #0f0f14, rgba(15,15,20,0.9), transparent)'
+            ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.8), transparent)' 
+            : 'linear-gradient(to top, #0f172a, rgba(15,23,42,0.9), transparent)'
         }}
       />
     </section>

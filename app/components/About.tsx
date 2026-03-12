@@ -47,8 +47,8 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className={`py-10 relative overflow-hidden ${isLight ? 'bg-gray-50' : 'bg-bg-secondary/30'}`}>
-      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-20'}`}></div>
+    <section id="about" className="py-10 relative overflow-hidden bg-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(139,92,246,0.1)_1px,transparent_0)] bg-[18px_18px]"></div>
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div
           ref={ref}

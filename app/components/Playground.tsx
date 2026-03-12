@@ -64,8 +64,8 @@ export default function Playground() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="how-i-build" className={`py-20 relative ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
-      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-5' : 'opacity-30'}`}></div>
+    <section id="how-i-build" className={`py-20 relative ${isLight ? 'bg-[#ffffff]' : 'bg-[#0c0a14]'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(139,92,246,0.15)_1px,transparent_0)] bg-[20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(139,92,246,0.3)_1px,transparent_0)] bg-[25px_25px]'}`}></div>
 
       <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
         <motion.div

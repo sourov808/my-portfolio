@@ -84,8 +84,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className={`py-12 md:py-16 relative ${isLight ? 'bg-gray-50' : ''}`}>
-      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
+    <section id="contact" className="py-12 md:py-16 relative bg-white">
 
       <div className="max-w-3xl mx-auto px-5 md:px-20 relative z-10">
         <div className="text-center mb-8 md:mb-10">

@@ -63,8 +63,8 @@ export default function Timeline() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className={`py-16 relative z-20 ${isLight ? 'bg-gray-50' : 'bg-bg-primary'}`}>
-      <div className={`absolute inset-0 simulation-grid ${isLight ? 'opacity-10' : 'opacity-30'}`}></div>
+    <section id="experience" className={`py-16 relative z-20 ${isLight ? 'bg-[#f8fafc]' : 'bg-[#0f0f14]'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:30px_30px]' : 'simulation-grid'}`}></div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
         <motion.div

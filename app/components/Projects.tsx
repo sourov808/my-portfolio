@@ -155,8 +155,8 @@ export default function Projects() {
 
   const bgShift = useTransform(sectionProgress, [0, 0.5, 1], 
     isLight 
-      ? ['rgba(255, 255, 255, 1)', 'rgba(247, 247, 249, 1)', 'rgba(255, 255, 255, 1)']
-      : ['rgba(0, 0, 0, 1)', 'rgba(8, 8, 12, 1)', 'rgba(0, 0, 0, 1)']
+      ? ['rgba(255, 255, 255, 1)', 'rgba(249, 250, 251, 1)', 'rgba(255, 255, 255, 1)']
+      : ['rgba(10, 8, 18, 1)', 'rgba(15, 15, 25, 1)', 'rgba(10, 8, 18, 1)']
   );
 
   return (
