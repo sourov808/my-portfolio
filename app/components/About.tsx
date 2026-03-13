@@ -3,17 +3,9 @@
 import { motion, Variants } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import { socialLinks } from '../constants/socialLinks';
-
-const GithubActivity = dynamic(() => import('./GithubActivity'), {
-  loading: () => (
-    <div className="w-full h-48 flex items-center justify-center">
-      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  ),
-  ssr: false
-});
+import GithubActivity from './GithubActivity';
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -105,7 +97,18 @@ export default function About() {
           </motion.div>
           
           <motion.div variants={itemVariants}>
-             <GithubActivity />
+            <Suspense
+              fallback={
+                <div className="w-full py-20 flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <p className={`text-sm ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>Loading GitHub activity...</p>
+                  </div>
+                </div>
+              }
+            >
+              <GithubActivity />
+            </Suspense>
           </motion.div>
 
           {/* Find Me On Section */}
