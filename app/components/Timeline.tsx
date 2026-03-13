@@ -63,19 +63,19 @@ export default function Timeline() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className={`py-16 relative z-20 ${isLight ? 'bg-[#f8fafc]' : 'bg-[#0f0f14]'}`}>
-      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:30px_30px]' : 'simulation-grid'}`}></div>
+    <section id="experience" className={`py-24 md:py-28 relative z-20 ${isLight ? 'bg-[#F8FAFC]' : 'bg-[#0F172A]'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(79,70,229,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.04)_1px,transparent_1px)] bg-[size:30px_30px]' : 'simulation-grid'}`}></div>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-20 relative z-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-center mb-16"
         >
           <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-            <span className="material-symbols-outlined text-primary">history</span>
+            <span className="material-symbols-outlined text-[#4F46E5]">history</span>
             Learning Journey
           </h2>
           <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>My path to becoming a developer</p>
@@ -85,20 +85,20 @@ export default function Timeline() {
           {experiences.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-high-contrast'} group ${isLight ? 'hover:border-primary' : 'hover:border-cyber-lime'} ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(173,255,47,0.3)]'} transition-all duration-300 cursor-pointer`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 }}
+              animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15 + index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-[#1E293B]/60 border border-white/10'} group ${isLight ? 'hover:border-[#4F46E5]/40' : 'hover:border-[#4F46E5]/30'} ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(79,70,229,0.2)]'} transition-all duration-300 cursor-pointer rounded-xl`}
             >
               <div className="p-6 flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 transition-colors ${isLight ? 'bg-primary/10 group-hover:bg-cyber-lime/10' : 'bg-primary/10 group-hover:bg-cyber-lime/10'}`}>
-                  {IconMap[item.icon] || <span className="material-symbols-outlined text-primary group-hover:text-cyber-lime transition-colors">{item.icon}</span>}
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isLight ? 'bg-[#4F46E5]/10 group-hover:bg-[#4F46E5]/15' : 'bg-[#4F46E5]/15 group-hover:bg-[#4F46E5]/20'}`}>
+                  {IconMap[item.icon] || <span className="material-symbols-outlined text-[#4F46E5] group-hover:text-[#6366F1] transition-colors">{item.icon}</span>}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                     <h3 className={`font-display font-bold text-xl uppercase ${isLight ? 'text-gray-900' : 'text-white'}`}>{item.title}</h3>
-                    <span className="text-cyber-lime font-mono text-sm">{item.year}</span>
+                    <span className="text-[#818CF8] font-mono text-sm">{item.year}</span>
                   </div>
                   <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>{item.description}</p>
                 </div>
@@ -108,13 +108,13 @@ export default function Timeline() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className={`mt-8 rounded-xl p-6 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className={`mt-8 rounded-xl p-6 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-[#1E293B]/60 border border-white/10'}`}
         >
           <div className="flex items-center gap-3 mb-4">
-            <svg viewBox="0 0 24 24" className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#4F46E5]" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
               <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
               <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>

@@ -40,11 +40,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressContentEditableWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+                  if (!isDark) {
+                    document.documentElement.classList.add('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-bg-primary text-slate-300 antialiased`}  >
+      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-[#F8FAFC] text-slate-300 antialiased`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

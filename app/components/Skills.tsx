@@ -76,6 +76,8 @@ function OrbitingIcon({
         y,
         z,
         scale,
+        translateX: '-50%',
+        translateY: '-50%',
         zIndex: isHoveredThis ? 100 : 1,
         transformStyle: 'preserve-3d',
         opacity,
@@ -135,7 +137,7 @@ function OrbitRing({
   scrollVelocity: MotionValue<number>;
 }) {
   return (
-    <div className="absolute" style={{ transform: `translateZ(0px)` }}>
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ transform: `translateZ(0px)` }}>
       {techs.map((tech, i) => (
         <OrbitingIcon
           key={tech.name}
@@ -185,35 +187,41 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-16 relative min-h-screen h-screen overflow-hidden flex flex-col items-center justify-center isolate"
-      style={{ 
-        background: isLight 
+      ref={titleRef}
+      className="py-6 md:py-16 relative min-h-[400px] md:min-h-[70vh] overflow-hidden flex flex-col items-center justify-center isolate"
+      style={{
+        background: isLight
           ? 'radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 100%)'
-          : '#0f172a',
+          : '#0F172A',
         perspective: '1000px',
       }}
     >
       <motion.div
         ref={titleRef}
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="absolute top-12 md:top-24 left-0 right-0 z-30 flex flex-col items-center text-center px-6"
+        transition={{ duration: 0.8 }}
+        className="absolute top-12 md:top-24  left-0 right-0 z-30 hidden lg:flex flex-col items-center text-center px-6"
       >
-        <h2 className={`font-display font-black text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight mb-2 drop-shadow-lg transition-colors duration-500 ${
+        <h2 className={`font-display font-black text-5xl lg:text-6xl uppercase tracking-tight mb-2 transition-colors duration-500 ${
           isLight ? 'text-slate-900' : 'text-white'
         }`}>
           TECH STACK
         </h2>
-        <p className={`font-mono text-xs md:text-sm tracking-widest uppercase drop-shadow-md transition-colors duration-500 ${
+        <p className={`font-mono text-sm tracking-widest uppercase transition-colors duration-500 ${
           isLight ? 'text-slate-500' : 'text-slate-400'
         }`}>
           Technologies I Work With
         </p>
       </motion.div>
 
-      <div className="absolute inset-0 mt-16 md:mt-24 flex items-center justify-center">
-        <div className="relative" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        <div className="relative ml-12 w-[400px] h-[400px] md:w-[600px] md:h-[600px] flex items-center justify-center" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
           <OrbitRing
             radius={innerRadius}
             technologies={innerTechs}
@@ -242,22 +250,22 @@ export default function Skills() {
             scrollVelocity={smoothVelocity}
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div 
-        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none" 
+      <div
+        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none"
         style={{
-          background: isLight 
-            ? 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.8), transparent)' 
-            : 'linear-gradient(to bottom, #0f172a, rgba(15,23,42,0.9), transparent)'
+          background: isLight
+            ? 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.8), transparent)'
+            : 'linear-gradient(to bottom, #0F172A, rgba(15,23,42,0.9), transparent)'
         }}
       />
-      <div 
-        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none" 
+      <div
+        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none"
         style={{
-          background: isLight 
-            ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.8), transparent)' 
-            : 'linear-gradient(to top, #0f172a, rgba(15,23,42,0.9), transparent)'
+          background: isLight
+            ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.8), transparent)'
+            : 'linear-gradient(to top, #0F172A, rgba(15,23,42,0.9), transparent)'
         }}
       />
     </section>

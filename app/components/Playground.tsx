@@ -64,15 +64,15 @@ export default function Playground() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="how-i-build" className={`py-20 relative ${isLight ? 'bg-[#ffffff]' : 'bg-[#0c0a14]'}`}>
-      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(139,92,246,0.15)_1px,transparent_0)] bg-[20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(139,92,246,0.3)_1px,transparent_0)] bg-[25px_25px]'}`}></div>
+    <section id="how-i-build" className={`py-24 md:py-28 relative ${isLight ? 'bg-[#FFFFFF]' : 'bg-[#0F172A]'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.12)_1px,transparent_0)] bg-[20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.25)_1px,transparent_0)] bg-[25px_25px]'}`}></div>
 
-      <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-center mb-12"
         >
           <h2 className={`font-display font-black text-4xl md:text-5xl uppercase tracking-tight mb-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
@@ -87,24 +87,29 @@ export default function Playground() {
           {principles.map((principle, index) => (
             <motion.div
               key={principle.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className={`group p-6 rounded-xl transition-all duration-300 hover:-translate-y-1 ${
-                isLight 
-                  ? 'bg-white border border-gray-200 hover:shadow-lg hover:border-gray-300' 
-                  : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/10'
+                isLight
+                  ? 'bg-white border border-gray-200 hover:shadow-lg hover:border-[#4F46E5]/30'
+                  : 'bg-[#1E293B]/60 border border-white/10 hover:bg-[#1E293B]/80 hover:border-[#4F46E5]/30 hover:shadow-lg hover:shadow-[#4F46E5]/10'
               }`}
             >
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-colors ${
-                isLight 
-                  ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white' 
-                  : 'bg-primary/20 text-primary group-hover:bg-primary group-hover:text-white'
-              }`}>
+              <motion.div
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
+                  isLight
+                    ? 'bg-[#4F46E5]/10 text-[#4F46E5] group-hover:bg-[#4F46E5] group-hover:text-white'
+                    : 'bg-[#4F46E5]/20 text-[#4F46E5] group-hover:bg-[#4F46E5] group-hover:text-white'
+                }`}
+                initial={{ scale: 0.8, rotate: -10 }}
+                animate={isInView ? { scale: 1, rotate: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.15 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
                 {principle.icon}
-              </div>
+              </motion.div>
               <h3 className={`font-display font-bold text-lg mb-2 transition-colors ${
-                isLight ? 'text-gray-900 group-hover:text-primary' : 'text-white group-hover:text-primary'
+                isLight ? 'text-gray-900 group-hover:text-[#4F46E5]' : 'text-white group-hover:text-[#4F46E5]'
               }`}>
                 {principle.title}
               </h3>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { socialLinks } from '../constants/socialLinks';
 
@@ -84,17 +85,29 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-12 md:py-16 relative bg-white">
+    <section id="contact" className="py-24 md:py-28 relative bg-white">
 
-      <div className="max-w-3xl mx-auto px-5 md:px-20 relative z-10">
-        <div className="text-center mb-8 md:mb-10">
+      <div className="max-w-[1000px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center mb-8 md:mb-10"
+        >
           <h2 className={`font-display font-black text-3xl md:text-4xl tracking-tight mb-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
             Let&apos;s Work Together
           </h2>
           <p className={`max-w-lg mx-auto text-base md:text-lg ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>Have a project in mind or need help building a scalable web application? I&apos;d love to hear about it.</p>
-        </div>
+        </motion.div>
 
-        <div className={`rounded-2xl overflow-hidden ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'glass-panel'}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className={`rounded-2xl overflow-hidden ${isLight ? 'bg-white border border-gray-200 shadow-md' : 'bg-[#1E293B]/60 border border-white/10 shadow-lg'}`}
+        >
           <div className="p-6 md:p-10">
             <h3 className={`text-lg md:text-xl font-semibold mb-5 md:mb-6 ${isLight ? 'text-gray-800' : 'text-white'}`}>
               Start a Conversation
@@ -102,7 +115,12 @@ export default function Contact() {
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.5, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
                   <label className={`block text-sm font-medium mb-2 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
                     Name
                   </label>
@@ -112,14 +130,19 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     disabled={status !== 'idle'}
                     placeholder="Your name"
-                    className={`w-full px-4 py-3 rounded-lg border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                      isLight 
-                        ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-primary' 
-                        : 'bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary'
+                    className={`w-full px-4 py-3 rounded-xl border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/30 ${
+                      isLight
+                        ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4F46E5]'
+                        : 'bg-[#0F172A]/40 border-white/10 text-white placeholder:text-slate-500 focus:border-[#4F46E5]'
                     }`}
                   />
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
                   <label className={`block text-sm font-medium mb-2 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
                     Email
                   </label>
@@ -129,16 +152,21 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={status !== 'idle'}
                     placeholder="your@email.com"
-                    className={`w-full px-4 py-3 rounded-lg border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                      isLight 
-                        ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-primary' 
-                        : 'bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary'
+                    className={`w-full px-4 py-3 rounded-xl border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/30 ${
+                      isLight
+                        ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4F46E5]'
+                        : 'bg-[#0F172A]/40 border-white/10 text-white placeholder:text-slate-500 focus:border-[#4F46E5]'
                     }`}
                   />
-                </div>
+                </motion.div>
               </div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
                 <label className={`block text-sm font-medium mb-2 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
                   Subject
                 </label>
@@ -148,15 +176,20 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   disabled={status !== 'idle'}
                   placeholder="What's this about?"
-                  className={`w-full px-4 py-3 rounded-lg border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                    isLight 
-                      ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-primary' 
-                      : 'bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary'
+                  className={`w-full px-4 py-3 rounded-xl border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/30 ${
+                    isLight
+                      ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4F46E5]'
+                      : 'bg-[#0F172A]/40 border-white/10 text-white placeholder:text-slate-500 focus:border-[#4F46E5]'
                   }`}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
                 <label className={`block text-sm font-medium mb-2 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
                   Message
                 </label>
@@ -166,46 +199,64 @@ export default function Contact() {
                   disabled={status !== 'idle'}
                   placeholder="Tell me about your project..."
                   rows={4}
-                  className={`w-full px-4 py-3 rounded-lg border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none ${
-                    isLight 
-                      ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-primary' 
-                      : 'bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary'
+                  className={`w-full px-4 py-3 rounded-xl border text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/30 resize-none ${
+                    isLight
+                      ? 'bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4F46E5]'
+                      : 'bg-[#0F172A]/40 border-white/10 text-white placeholder:text-slate-500 focus:border-[#4F46E5]'
                   }`}
                 />
-              </div>
+              </motion.div>
 
-              <button
-                type="submit"
-                disabled={status !== 'idle' && status !== 'success' && status !== 'error' || !formData.name || !formData.email || !formData.subject || !formData.message}
-                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 md:py-3.5 rounded-lg transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 text-base"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, delay: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : status === 'error' ? 'Failed - Try Again' : 'Send Message'}
-              </button>
+                <button
+                  type="submit"
+                  disabled={status !== 'idle' && status !== 'success' && status !== 'error' || !formData.name || !formData.email || !formData.subject || !formData.message}
+                  className="w-full bg-[#4F46E5] hover:bg-[#6366F1] text-white font-semibold py-4 md:py-3.5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#4F46E5]/30 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 text-base"
+                >
+                  {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : status === 'error' ? 'Failed - Try Again' : 'Send Message'}
+                </button>
+              </motion.div>
 
               {(status === 'success' || status === 'error') && (
-                <div className="mt-4 p-4 rounded-lg text-center">
-                  <p className={`text-sm mb-3 ${status === 'success' ? (isLight ? 'text-green-600' : 'text-cyber-lime') : (isLight ? 'text-red-500' : 'text-red-400')}`}>
-                    {status === 'success' 
-                      ? 'Message sent successfully' 
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-4 p-4 rounded-xl text-center"
+                >
+                  <p className={`text-sm mb-3 ${status === 'success' ? (isLight ? 'text-green-600' : 'text-green-400') : (isLight ? 'text-red-500' : 'text-red-400')}`}>
+                    {status === 'success'
+                      ? 'Message sent successfully'
                       : (errorMsg || 'Failed to send message. Please try again.')}
                   </p>
-                  
+
                   {status === 'error' && (
                     <button
                       type="button"
                       onClick={resetForm}
-                      className="text-sm text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+                      className="text-sm text-[#4F46E5] hover:text-[#6366F1] underline underline-offset-2 transition-colors"
                     >
                       Try Again
                     </button>
                   )}
-                </div>
+                </motion.div>
               )}
             </form>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-12 md:mt-16 max-w-2xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-12 md:mt-16 max-w-2xl mx-auto text-center"
+        >
           <div className="flex items-center justify-center gap-4 mb-6 md:mb-8">
             <div className={`h-px w-12 sm:w-24 ${isLight ? 'bg-gray-300' : 'bg-white/10'}`}></div>
             <p className={`text-sm font-medium ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>
@@ -216,11 +267,15 @@ export default function Contact() {
 
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12">
             {socialLinksData.map((link, index) => (
-              <a
+              <motion.a
                 key={index}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.4, delay: 0.55 + index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className={`group flex items-center gap-2 sm:gap-3 transition-colors duration-300 hover:-translate-y-0.5 ${isLight ? `text-gray-600 ${link.colorLight}` : `text-slate-400 ${link.colorDark}`}`}
               >
                 <span className="opacity-80 group-hover:opacity-100 transition-opacity">
@@ -228,12 +283,12 @@ export default function Contact() {
                 </span>
                 <span className="font-medium text-sm sm:text-base relative pb-1">
                   {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
                 </span>
-              </a>
+              </motion.a>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

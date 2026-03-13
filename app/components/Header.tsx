@@ -42,9 +42,9 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 shadow-sm' : 'bg-transparent'} backdrop-blur-md`}>
-      <div className="max-w-7xl mx-auto px-5 md:px-20 py-3 md:py-4 flex items-center justify-between">
-        <Logo 
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'} backdrop-blur-md`}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-12 py-3 md:py-4 flex items-center justify-between">
+        <Logo
           href="#hero"
           onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
         />
@@ -55,10 +55,10 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
-              className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
                 activeSection === link.href.slice(1)
-                  ? 'text-primary border-b-2 border-primary'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-[#4F46E5] bg-[#4F46E5]/10'
+                  : 'text-gray-600 hover:text-[#4F46E5] hover:bg-gray-100/50'
               }`}
             >
               {link.label}
@@ -68,10 +68,10 @@ export default function Header() {
 
         <button
           onClick={() => scrollToSection('#contact')}
-          className={`text-sm font-bold px-4 md:px-5 py-2.5 md:py-2 rounded-lg transition-all duration-200 ${
+          className={`text-sm font-semibold px-5 md:px-6 py-2.5 md:py-2.5 rounded-xl transition-all duration-300 ${
             activeSection === 'contact'
-              ? 'bg-primary text-white shadow-[0_0_20px_rgba(139,92,246,0.6)]'
-              : 'bg-primary hover:bg-primary/90 text-white hover:scale-105'
+              ? 'bg-[#4F46E5] text-white shadow-lg shadow-[#4F46E5]/30'
+              : 'bg-[#4F46E5] hover:bg-[#6366F1] text-white hover:shadow-lg hover:shadow-[#4F46E5]/25 hover:-translate-y-0.5'
           }`}
         >
           Contact

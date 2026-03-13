@@ -143,34 +143,43 @@ export default function Projects() {
   });
 
   const sectionProgress = useSpring(scrollYProgress, { damping: 30, stiffness: 100 });
-  
+
   const titleOpacity = useTransform(
     scrollYProgress,
     [0, 0.10, 0.18],
     [1, 0.5, 0],
     { clamp: true }
   );
-  
+
   const titlePointerEvents = useTransform(titleOpacity, (val: number) => val > 0.3 ? "auto" : "none");
 
-  const bgShift = useTransform(sectionProgress, [0, 0.5, 1], 
-    isLight 
+  const bgShift = useTransform(sectionProgress, [0, 0.5, 1],
+    isLight
       ? ['rgba(255, 255, 255, 1)', 'rgba(249, 250, 251, 1)', 'rgba(255, 255, 255, 1)']
       : ['rgba(10, 8, 18, 1)', 'rgba(15, 15, 25, 1)', 'rgba(10, 8, 18, 1)']
   );
 
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    setHasLoaded(true);
+  }, []);
+
   return (
-    <motion.section 
+    <motion.section
       ref={sectionRef}
-      id="projects" 
+      id="projects"
       className={`relative w-full pb-16 md:py-10 transition-colors duration-700`}
       style={{ backgroundColor: bgShift }}
     >
-      <motion.div 
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={hasLoaded ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="max-w-[1400px] mx-auto px-5 md:px-12 text-center pt-10 md:pt-32 pb-4 md:sticky md:top-0"
         style={{ opacity: titleOpacity, pointerEvents: titlePointerEvents }}
       >
-        <h2 className={`font-display font-medium text-3xl md:text-5xl tracking-tight transition-colors duration-700 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+         <h2 className={`font-display font-medium text-3xl md:text-5xl tracking-tight transition-colors duration-700 ${isLight ? 'text-gray-900' : 'text-white'}`}>
            Projects
         </h2>
         <p className={`text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-4 md:mt-6 transition-colors ${isLight ? 'text-gray-600' : 'text-gray-400'}`}>
@@ -181,11 +190,11 @@ export default function Projects() {
       <div className="w-full relative z-20 mt-[5vh] md:mt-[10vh]" style={{ height: isMobile ? "300vh" : "400vh" }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projectsData.slice(0, 3).map((project, index) => (
-            <ProjectCard 
-              key={project.name} 
-              project={project} 
-              isLight={isLight} 
-              index={index} 
+            <ProjectCard
+              key={project.name}
+              project={project}
+              isLight={isLight}
+              index={index}
               progress={scrollYProgress}
             />
           ))}
@@ -193,9 +202,9 @@ export default function Projects() {
       </div>
 
       <div className="w-full h-[30vh] md:h-[50vh] flex flex-col items-center justify-center px-6 relative z-10 border-t border-gray-100 dark:border-white/5">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-20%" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center"
@@ -203,8 +212,8 @@ export default function Projects() {
           <Link
             href="/projects"
             className={`inline-flex items-center justify-center px-8 py-4 md:py-3 rounded-full text-base font-medium transition-all duration-500 ease-out group ${
-              isLight 
-                ? 'bg-gray-900 text-white hover:bg-gray-800 hover:scale-[1.02]' 
+              isLight
+                ? 'bg-gray-900 text-white hover:bg-gray-800 hover:scale-[1.02]'
                 : 'bg-white text-gray-900 hover:bg-gray-100 hover:scale-[1.02]'
             }`}
           >
