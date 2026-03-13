@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import Link from 'next/link';
 
 const experiences = [
   {
@@ -19,15 +20,15 @@ const experiences = [
   },
   {
     icon: 'web',
-    title: 'Full-Stack Development',
-    description: 'Expanded to Next.js, backend APIs, database integration, and authentication.',
+    title: 'Modern Web Development',
+    description: 'Developed high-performance applications with Next.js and Supabase, implementing complex state patterns and design systems.',
     year: '2024',
   },
   {
     icon: 'deployment',
-    title: 'Building Projects',
-    description: 'Creating real-world applications to solve problems and learn best practices.',
-    year: '2024',
+    title: 'Building Real-World Projects',
+    description: 'Focusing on scalable architectures and product-driven development while pursuing a BCA degree.',
+    year: 'Current',
   },
 ];
 
@@ -63,8 +64,8 @@ export default function Timeline() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className={`py-24 md:py-28 relative z-20 ${isLight ? 'bg-[#F8FAFC]' : 'bg-[#0F172A]'}`}>
-      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(79,70,229,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.04)_1px,transparent_1px)] bg-[size:30px_30px]' : 'simulation-grid'}`}></div>
+    <section id="experience" className={`py-24 md:py-28 relative z-20 ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(79,70,229,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.04)_1px,transparent_1px)] bg-size-[30px_30px]' : 'simulation-grid'}`}></div>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <motion.div
@@ -75,7 +76,7 @@ export default function Timeline() {
           className="text-center mb-16"
         >
           <h2 className={`font-display font-black text-4xl uppercase tracking-tight mb-2 flex items-center justify-center gap-3 ${isLight ? 'text-gray-900' : 'text-white'}`}>
-            <span className="material-symbols-outlined text-[#4F46E5]">history</span>
+            <span className="material-symbols-outlined text-primary">history</span>
             Learning Journey
           </h2>
           <p className={isLight ? 'text-gray-600' : 'text-slate-400'}>My path to becoming a developer</p>
@@ -88,17 +89,17 @@ export default function Timeline() {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 }}
               animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.15 + index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-[#1E293B]/60 border border-white/10'} group ${isLight ? 'hover:border-[#4F46E5]/40' : 'hover:border-[#4F46E5]/30'} ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(79,70,229,0.2)]'} transition-all duration-300 cursor-pointer rounded-xl`}
+              className={`${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-bg-secondary/60 border border-white/10'} group ${isLight ? 'hover:border-primary/40' : 'hover:border-primary/30'} ${isLight ? 'hover:shadow-lg' : 'hover:shadow-[0_0_20px_rgba(79,70,229,0.2)]'} transition-all duration-300 cursor-pointer rounded-xl`}
             >
               <div className="p-6 flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isLight ? 'bg-[#4F46E5]/10 group-hover:bg-[#4F46E5]/15' : 'bg-[#4F46E5]/15 group-hover:bg-[#4F46E5]/20'}`}>
-                  {IconMap[item.icon] || <span className="material-symbols-outlined text-[#4F46E5] group-hover:text-[#6366F1] transition-colors">{item.icon}</span>}
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isLight ? 'bg-primary/10 group-hover:bg-primary/15' : 'bg-primary/15 group-hover:bg-primary/20'}`}>
+                  {IconMap[item.icon] || <span className="material-symbols-outlined text-primary group-hover:text-primary-hover transition-colors">{item.icon}</span>}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3 className={`font-display font-bold text-xl uppercase ${isLight ? 'text-gray-900' : 'text-white'}`}>{item.title}</h3>
-                    <span className="text-[#818CF8] font-mono text-sm">{item.year}</span>
+                    <h3 className={`text-lg md:text-xl font-bold transition-colors ${isLight ? 'text-gray-900' : 'text-white'} group-hover:text-primary`}>{item.title}</h3>
+                    <span className="text-primary-highlight font-mono text-sm">{item.year}</span>
                   </div>
                   <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>{item.description}</p>
                 </div>
@@ -111,10 +112,10 @@ export default function Timeline() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className={`mt-8 rounded-xl p-6 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-[#1E293B]/60 border border-white/10'}`}
+          className={`mt-8 rounded-xl p-6 ${isLight ? 'bg-white border border-gray-200 shadow-sm' : 'bg-bg-secondary/60 border border-white/10'}`}
         >
           <div className="flex items-center gap-3 mb-4">
-            <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#4F46E5]" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg viewBox="0 0 24 24" className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
               <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
               <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
@@ -122,10 +123,18 @@ export default function Timeline() {
             </svg>
             <h3 className={`font-bold ${isLight ? 'text-gray-900' : 'text-white'}`}>What&apos;s Next?</h3>
           </div>
-          <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
-            I&apos;m actively building projects, learning new technologies, and looking for opportunities to contribute to real-world applications.
-            My focus is on writing clean, maintainable code and building scalable solutions.
+          <p className={`max-w-lg mx-auto text-base md:text-lg mb-8 ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
+            Interested in collaborating, discussing a project, or just connecting? Feel free to reach out.
           </p>
+          <div className="text-center">
+            <Link
+              href="/#contact"
+              className={`inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm transition-all duration-300 ${isLight ? 'text-white bg-primary hover:bg-primary-hover' : 'text-white bg-primary hover:bg-primary-hover'}`}
+            >
+              Get in Touch
+              <span className="material-symbols-outlined ml-2 text-white">arrow_forward</span>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Caveat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
+import SmoothScroll from "./components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,6 +13,12 @@ const inter = Inter({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-handwriting",
   display: "swap",
 });
 
@@ -60,10 +67,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} bg-[#F8FAFC] text-slate-300 antialiased`}>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} bg-[#F8FAFC] text-slate-300 antialiased`}>
+        <SmoothScroll>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

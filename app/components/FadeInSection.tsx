@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface FadeInSectionProps {
@@ -38,28 +38,24 @@ export default function FadeInSection({
   delay = 0,
   variant = 'fade-up',
 }: FadeInSectionProps) {
-  const [hasLoaded, setHasLoaded] = useState(false);
-  const [isInViewport, setIsInViewport] = useState(false);
-
-  useEffect(() => {
-    setHasLoaded(true);
-  }, []);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   const selectedVariant = variants[variant];
 
   return (
-    <motion.div
-      initial={hasLoaded ? selectedVariant.initial : { opacity: 1, y: 0, scale: 1, x: 0 }}
-      whileInView={selectedVariant.animate}
-      viewport={{ once: true, margin: '-80px' }}
-      onViewportEnter={() => setIsInViewport(true)}
-      transition={{
-        duration: 0.8,
-        delay,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref}>
+      <motion.div
+        initial={selectedVariant.initial}
+        animate={isInView ? selectedVariant.animate : selectedVariant.initial}
+        transition={{
+          duration: 0.8,
+          delay,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }

@@ -188,7 +188,7 @@ export default function Skills() {
     <section
       id="skills"
       ref={titleRef}
-      className="py-6 md:py-16 relative min-h-[400px] md:min-h-[70vh] overflow-hidden flex flex-col items-center justify-center isolate"
+      className="py-20 md:py-28 relative"
       style={{
         background: isLight
           ? 'radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 100%)'
@@ -196,27 +196,10 @@ export default function Skills() {
         perspective: '1000px',
       }}
     >
-      <motion.div
-        ref={titleRef}
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="absolute top-12 md:top-24  left-0 right-0 z-30 hidden lg:flex flex-col items-center text-center px-6"
-      >
-        <h2 className={`font-display font-black text-5xl lg:text-6xl uppercase tracking-tight mb-2 transition-colors duration-500 ${
-          isLight ? 'text-slate-900' : 'text-white'
-        }`}>
-          TECH STACK
-        </h2>
-        <p className={`font-mono text-sm tracking-widest uppercase transition-colors duration-500 ${
-          isLight ? 'text-slate-500' : 'text-slate-400'
-        }`}>
-          Technologies I Work With
-        </p>
-      </motion.div>
+      {/* Removed Tech Stack Header as it is now in the Hero */}
 
       <motion.div
-        className="absolute inset-0 flex items-center justify-center"
+        className="w-full flex items-center justify-center py-12"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={isInView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -251,23 +234,6 @@ export default function Skills() {
           />
         </div>
       </motion.div>
-
-      <div
-        className="absolute inset-x-0 top-0 h-32 z-20 pointer-events-none"
-        style={{
-          background: isLight
-            ? 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.8), transparent)'
-            : 'linear-gradient(to bottom, #0F172A, rgba(15,23,42,0.9), transparent)'
-        }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-32 z-20 pointer-events-none"
-        style={{
-          background: isLight
-            ? 'linear-gradient(to top, #f8fafc, rgba(248,250,252,0.8), transparent)'
-            : 'linear-gradient(to top, #0F172A, rgba(15,23,42,0.9), transparent)'
-        }}
-      />
     </section>
   );
 }

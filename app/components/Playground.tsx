@@ -64,8 +64,8 @@ export default function Playground() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="how-i-build" className={`py-24 md:py-28 relative ${isLight ? 'bg-[#FFFFFF]' : 'bg-[#0F172A]'}`}>
-      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.12)_1px,transparent_0)] bg-[20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.25)_1px,transparent_0)] bg-[25px_25px]'}`}></div>
+    <section id="how-i-build" className={`py-24 md:py-28 relative ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.12)_1px,transparent_0)] bg-[position:20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.25)_1px,transparent_0)] bg-[position:25px_25px]'}`}></div>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <motion.div
@@ -92,15 +92,15 @@ export default function Playground() {
               transition={{ duration: 0.6, delay: 0.1 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className={`group p-6 rounded-xl transition-all duration-300 hover:-translate-y-1 ${
                 isLight
-                  ? 'bg-white border border-gray-200 hover:shadow-lg hover:border-[#4F46E5]/30'
-                  : 'bg-[#1E293B]/60 border border-white/10 hover:bg-[#1E293B]/80 hover:border-[#4F46E5]/30 hover:shadow-lg hover:shadow-[#4F46E5]/10'
+                  ? 'bg-white border border-gray-200 hover:shadow-lg hover:border-primary/30'
+                  : 'bg-bg-secondary/60 border border-white/10 hover:bg-bg-secondary/80 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10'
               }`}
             >
               <motion.div
                 className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
                   isLight
-                    ? 'bg-[#4F46E5]/10 text-[#4F46E5] group-hover:bg-[#4F46E5] group-hover:text-white'
-                    : 'bg-[#4F46E5]/20 text-[#4F46E5] group-hover:bg-[#4F46E5] group-hover:text-white'
+                    ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white'
+                    : 'bg-primary/20 text-primary group-hover:bg-primary group-hover:text-white'
                 }`}
                 initial={{ scale: 0.8, rotate: -10 }}
                 animate={isInView ? { scale: 1, rotate: 0 } : {}}
@@ -109,7 +109,7 @@ export default function Playground() {
                 {principle.icon}
               </motion.div>
               <h3 className={`font-display font-bold text-lg mb-2 transition-colors ${
-                isLight ? 'text-gray-900 group-hover:text-[#4F46E5]' : 'text-white group-hover:text-[#4F46E5]'
+                isLight ? 'text-gray-900 group-hover:text-primary' : 'text-white group-hover:text-primary'
               }`}>
                 {principle.title}
               </h3>
