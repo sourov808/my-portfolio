@@ -70,6 +70,16 @@ html:not(.light) {
   border-radius: 4px;
 }
 
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 ::selection {
   background: #818CF8;
   color: #0F172A;

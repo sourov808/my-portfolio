@@ -8,122 +8,120 @@ import { Project, projectsData } from '../data/projects';
 import { Github, ExternalLink } from 'lucide-react';
 
 function ProjectCard({ project, isLight }: { project: Project; isLight: boolean }) {
-  const cardBg = isLight ? 'bg-white border-gray-100 shadow-sm hover:shadow-xl' : 'bg-slate-900/50 border-white/5 shadow-2xl hover:shadow-primary/10';
-  
   return (
-    <Link href="/projects" className="block h-full">
+    <Link href="/projects" className="block h-full group">
       <motion.div
-        initial={{ 
-          opacity: 0, 
-          y: 40,
-          scale: 0.8,
-          rotateX: 15,
-          rotateY: -5
-        }}
-        whileInView={{ 
-          opacity: 1, 
-          y: 0,
-          scale: 1,
-          rotateX: 0,
-          rotateY: 0
-        }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
-        whileHover={{ 
-          y: -12, 
-          scale: 1.02,
-          rotateX: 2,
-          transition: { duration: 0.3 }
-        }}
-        transition={{ 
-          type: "spring",
-          stiffness: 100,
-          damping: 20,
-          opacity: { duration: 0.5 }
-        }}
-        style={{ perspective: 1000 }}
-        className={`group relative flex flex-col h-full rounded-4xl border overflow-hidden transition-all duration-300 ${cardBg} ${project.isFeatured ? 'md:col-span-2 lg:col-span-1' : ''}`}
+        whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={`relative h-full rounded-lg overflow-hidden transition-all duration-500 ${
+          isLight 
+            ? 'bg-white border border-gray-100 shadow-lg hover:shadow-2xl hover:shadow-primary/10' 
+            : 'bg-slate-900/80 border border-white/10 shadow-2xl hover:shadow-primary/20'
+        } backdrop-blur-sm`}
       >
         {/* Visual Header / Image Container */}
-        <div className="relative h-48 overflow-hidden bg-slate-800">
+        <div className="relative h-64 p-2 flex items-center justify-center">
           {project.image ? (
-            <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-              <Image 
-                src={project.image} 
+            <div className="relative w-full h-full overflow-hidden rounded-md">
+              <Image
+                src={project.image}
                 alt={project.name}
                 fill
-                className="object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 to-transparent"></div>
             </div>
           ) : (
-            <div 
-              className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
-              style={{ background: `linear-gradient(135deg, ${project.color}40 0%, ${project.color}60 100%)` }}
+            <div
+              className="absolute inset-2 rounded-lg"
+              style={{ background: `linear-gradient(135deg, ${project.color}30 0%, ${project.color}50 100%)` }}
             >
-              <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50">
-                 <div className={`w-32 h-32 rounded-full blur-3xl`} style={{ backgroundColor: project.color }}></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div 
+                  className="w-40 h-40 rounded-full blur-3xl opacity-40"
+                  style={{ backgroundColor: project.color }}
+                />
               </div>
             </div>
           )}
-          
-          <div className="absolute top-6 left-6 z-10">
-             <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${isLight ? 'bg-white/90 text-gray-900 shadow-sm' : 'bg-black/60 text-white backdrop-blur-md'}`}>
-               {project.isFeatured ? 'Featured Project' : 'Web App'}
-             </span>
-          </div>
         </div>
 
         {/* Content */}
-        <div className="flex flex-col flex-1 p-8">
-          <h3 className={`text-2xl font-display font-bold mb-4 group-hover:text-primary transition-colors duration-300 ${isLight ? 'text-gray-900' : 'text-white'}`}>
+        <div className="flex flex-col flex-1 p-6">
+          {/* Title */}
+          <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${
+            isLight ? 'text-gray-900' : 'text-white'
+          } group-hover:text-primary`}>
             {project.name}
           </h3>
-          
-          <div className="space-y-4 mb-8 flex-1">
-            <div>
-              <h4 className={`text-[10px] uppercase tracking-wider font-extrabold mb-1 ${isLight ? 'text-primary' : 'text-primary-highlight'}`}>Problem</h4>
-              <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
+
+          {/* Problem & Solution */}
+          <div className="space-y-3 mb-5 flex-1">
+            <div className={`p-3 rounded-xl ${isLight ? 'bg-gray-50' : 'bg-white/5'}`}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                <span className={`text-[10px] uppercase tracking-wider font-bold ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>Problem</span>
+              </div>
+              <p className={`text-xs leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 {project.problem}
               </p>
             </div>
-            <div>
-              <h4 className={`text-[10px] uppercase tracking-wider font-extrabold mb-1 ${isLight ? 'text-primary' : 'text-primary-highlight'}`}>Solution</h4>
-              <p className={`text-sm leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
+            <div className={`p-3 rounded-xl ${isLight ? 'bg-gray-50' : 'bg-white/5'}`}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                <span className={`text-[10px] uppercase tracking-wider font-bold ${isLight ? 'text-gray-500' : 'text-slate-400'}`}>Solution</span>
+              </div>
+              <p className={`text-xs leading-relaxed ${isLight ? 'text-gray-600' : 'text-slate-300'}`}>
                 {project.solution}
               </p>
             </div>
           </div>
 
           {/* Tech Stack */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.stack.map(tech => (
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {project.stack.slice(0, 5).map(tech => (
               <span
                 key={tech}
-                className={`px-3 py-1 text-[10px] font-bold uppercase rounded-md transition-colors ${
-                  isLight 
-                    ? 'bg-gray-100 text-gray-600 border border-gray-200' 
-                    : 'bg-white/5 text-slate-400 border border-white/5'
+                className={`px-2.5 py-1 text-[10px] font-semibold rounded-lg transition-all ${
+                  isLight
+                    ? 'bg-gray-100 text-gray-600 hover:bg-primary/10 hover:text-primary'
+                    : 'bg-white/5 text-slate-400 hover:bg-primary/20 hover:text-primary-highlight border border-white/5'
                 }`}
               >
                 {tech}
               </span>
             ))}
+            {project.stack.length > 5 && (
+              <span className={`px-2.5 py-1 text-[10px] font-semibold rounded-lg ${
+                isLight ? 'bg-gray-100 text-gray-500' : 'bg-white/5 text-slate-500'
+              }`}>
+                +{project.stack.length - 5}
+              </span>
+            )}
           </div>
 
-          {/* Links Overlay (Stopping event propagation if necessary, but Link is parent) */}
-          <div className="flex items-center gap-4 pt-4 border-t border-dashed border-gray-200 dark:border-white/5 relative z-10">
+          {/* Action Bar */}
+          <div className={`flex items-center gap-3 pt-4 border-t ${
+            isLight ? 'border-gray-100' : 'border-white/5'
+          }`}>
             {project.githubLink && (
-              <span className={`flex items-center gap-2 text-xs font-bold transition-colors ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
-                <Github size={16} /> Code
+              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${
+                isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'
+              }`}>
+                <Github size={14} /> Code
               </span>
             )}
             {project.liveLink && (
-              <span className={`flex items-center gap-2 text-xs font-bold transition-colors ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
-                <ExternalLink size={16} /> Live Demo
+              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${
+                isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'
+              }`}>
+                <ExternalLink size={14} /> Live
               </span>
             )}
-            <span className="ml-auto text-[10px] font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-              View Details ↗
+            <span className="ml-auto text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1">
+              Explore <ExternalLink size={12} />
             </span>
           </div>
         </div>
@@ -136,8 +134,11 @@ export default function Projects() {
   const { isLight } = useTheme();
 
   return (
-    <section id="projects" className={`py-24 md:py-32 relative ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
+    <section id="projects" className={`py-24 md:py-32 relative overflow-hidden ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
+      {/* Background grid pattern */}
+      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(79,70,229,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.04)_1px,transparent_1px)] bg-size-[30px_30px]' : 'simulation-grid'}`}></div>
+
+      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
