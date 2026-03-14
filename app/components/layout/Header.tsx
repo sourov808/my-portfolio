@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from '../context/ThemeContext';
-import Logo from './Logo';
-import { navigationLinks } from '../constants/navigation';
+import { useTheme } from '../../context/ThemeContext';
+import Logo from '../layout/Logo';
+import { navigationLinks } from '../../constants/navigation';
 
 const navLinks = navigationLinks;
 

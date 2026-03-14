@@ -1,11 +1,11 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import { socialLinks } from '../constants/socialLinks';
-import GithubActivity from './GithubActivity';
+import { socialLinks } from '../../constants/socialLinks';
+import GithubActivity from '../about/GithubActivity';
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },

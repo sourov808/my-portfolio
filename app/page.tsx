@@ -1,11 +1,11 @@
-import Header from './components/Header';
-import Hero from './components/Hero';
-import FadeInSection from './components/FadeInSection';
-import Projects from './components/Projects';
-import Playground from './components/Playground';
-import Timeline from './components/Timeline';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Header from './components/layout/Header';
+import Hero from './components/hero/Hero';
+import FadeInSection from './components/ui/FadeInSection';
+import Projects from './components/projects/Projects';
+import Playground from './components/playground/Playground';
+import Timeline from './components/timeline/Timeline';
+import Contact from './components/contact/Contact';
+import Footer from './components/layout/Footer';
 
 export default function Home() {
   return (

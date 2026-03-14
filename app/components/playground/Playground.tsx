@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const principles = [
   {
@@ -65,7 +65,7 @@ export default function Playground() {
 
   return (
     <section id="how-i-build" className={`py-24 md:py-28 relative ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
-      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.12)_1px,transparent_0)] bg-[position:20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.25)_1px,transparent_0)] bg-[position:25px_25px]'}`}></div>
+      <div className={`absolute inset-0 ${isLight ? 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.12)_1px,transparent_0)] bg-position-[20px_20px]' : 'bg-[radial-gradient(circle_at_1px_1px,rgba(79,70,229,0.25)_1px,transparent_0)] bg-position-[25px_25px]'}`}></div>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <motion.div

@@ -1,13 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Project, projectsData } from '../data/projects';
 import { Github, ExternalLink } from 'lucide-react';
+import { Project } from '../../data/projects';
 
-function ProjectCard({ project, isLight }: { project: Project; isLight: boolean }) {
+interface ProjectCardProps {
+  project: Project;
+  isLight: boolean;
+}
+
+export default function ProjectCard({ project, isLight }: ProjectCardProps) {
   return (
     <Link href="/projects" className="block h-full group">
       <motion.div
@@ -50,14 +54,10 @@ function ProjectCard({ project, isLight }: { project: Project; isLight: boolean 
 
         {/* Content */}
         <div className="flex flex-col flex-1 p-6">
-          {/* Title */}
-          <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${
-            isLight ? 'text-gray-900' : 'text-white'
-          } group-hover:text-primary`}>
+          <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${isLight ? 'text-gray-900' : 'text-white'} group-hover:text-primary`}>
             {project.name}
           </h3>
 
-          {/* Problem & Solution */}
           <div className="space-y-3 mb-5 flex-1">
             <div className={`p-3 rounded-xl ${isLight ? 'bg-gray-50' : 'bg-white/5'}`}>
               <div className="flex items-center gap-2 mb-1.5">
@@ -79,7 +79,6 @@ function ProjectCard({ project, isLight }: { project: Project; isLight: boolean 
             </div>
           </div>
 
-          {/* Tech Stack */}
           <div className="flex flex-wrap gap-1.5 mb-5">
             {project.stack.slice(0, 5).map(tech => (
               <span
@@ -94,29 +93,20 @@ function ProjectCard({ project, isLight }: { project: Project; isLight: boolean 
               </span>
             ))}
             {project.stack.length > 5 && (
-              <span className={`px-2.5 py-1 text-[10px] font-semibold rounded-lg ${
-                isLight ? 'bg-gray-100 text-gray-500' : 'bg-white/5 text-slate-500'
-              }`}>
+              <span className={`px-2.5 py-1 text-[10px] font-semibold rounded-lg ${isLight ? 'bg-gray-100 text-gray-500' : 'bg-white/5 text-slate-500'}`}>
                 +{project.stack.length - 5}
               </span>
             )}
           </div>
 
-          {/* Action Bar */}
-          <div className={`flex items-center gap-3 pt-4 border-t ${
-            isLight ? 'border-gray-100' : 'border-white/5'
-          }`}>
+          <div className={`flex items-center gap-3 pt-4 border-t ${isLight ? 'border-gray-100' : 'border-white/5'}`}>
             {project.githubLink && (
-              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${
-                isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'
-              }`}>
+              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'}`}>
                 <Github size={14} /> Code
               </span>
             )}
             {project.liveLink && (
-              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${
-                isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'
-              }`}>
+              <span className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${isLight ? 'text-gray-500 hover:text-gray-900' : 'text-slate-400 hover:text-white'}`}>
                 <ExternalLink size={14} /> Live
               </span>
             )}
@@ -127,61 +117,5 @@ function ProjectCard({ project, isLight }: { project: Project; isLight: boolean 
         </div>
       </motion.div>
     </Link>
-  );
-}
-
-export default function Projects() {
-  const { isLight } = useTheme();
-
-  return (
-    <section id="projects" className={`py-24 md:py-32 relative overflow-hidden ${isLight ? 'bg-white' : 'bg-bg-primary'}`}>
-      {/* Background grid pattern */}
-      <div className={`absolute inset-0 ${isLight ? 'bg-[linear-gradient(rgba(79,70,229,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.04)_1px,transparent_1px)] bg-size-[30px_30px]' : 'simulation-grid'}`}></div>
-
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
-        <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4"
-          >
-            <span className={`text-xs font-black uppercase tracking-[0.3em] ${isLight ? 'text-primary' : 'text-primary-highlight'}`}>Selected Work</span>
-          </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className={`font-display font-black text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter ${isLight ? 'text-gray-900' : 'text-white'}`}
-          >
-            Projects
-          </motion.h2>
-          <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mt-6 mb-8"></div>
-          <p className={`max-w-2xl mx-auto text-lg ${isLight ? 'text-gray-600' : 'text-slate-400'}`}>
-            A collection of high-performance applications built with modern tools and scalable architecture.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {projectsData.map((project) => (
-            <ProjectCard key={project.name} project={project} isLight={isLight} />
-          ))}
-        </div>
-
-        <div className="mt-20 text-center">
-             <Link 
-                href="/projects" 
-                className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold transition-all duration-300 ${
-                  isLight 
-                  ? 'bg-gray-900 text-white hover:bg-gray-800 hover:scale-105' 
-                  : 'bg-white text-gray-900 hover:bg-slate-200 hover:scale-105 shadow-xl shadow-white/5'
-                }`}
-              >
-                View All Projects <ExternalLink size={18} />
-              </Link>
-        </div>
-      </div>
-    </section>
   );
 }

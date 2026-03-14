@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { GitHubCalendar } from 'react-github-calendar';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Github } from 'lucide-react';
 
 export default function GithubActivity() {
