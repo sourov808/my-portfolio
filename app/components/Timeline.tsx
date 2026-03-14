@@ -4,25 +4,26 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Link from 'next/link';
+import { ArrowRightIcon } from 'lucide-react';
 
 const experiences = [
   {
     icon: 'javascript',
     title: 'JavaScript Fundamentals',
     description: 'Started with core JavaScript concepts, DOM manipulation, and ES6+ features.',
-    year: '2023',
+    year: '2024',
   },
   {
     icon: 'react',
     title: 'React Development',
     description: 'Learned React hooks, state management, component architecture, and modern patterns.',
-    year: '2023',
+    year: '2024',
   },
   {
     icon: 'web',
     title: 'Modern Web Development',
     description: 'Developed high-performance applications with Next.js and Supabase, implementing complex state patterns and design systems.',
-    year: '2024',
+    year: '2025',
   },
   {
     icon: 'deployment',
@@ -132,7 +133,9 @@ export default function Timeline() {
               className={`inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm transition-all duration-300 ${isLight ? 'text-white bg-primary hover:bg-primary-hover' : 'text-white bg-primary hover:bg-primary-hover'}`}
             >
               Get in Touch
-              <span className="material-symbols-outlined ml-2 text-white">arrow_forward</span>
+              <span className="material-symbols-outlined ml-2 text-white">
+                <ArrowRightIcon />
+              </span>
             </Link>
           </div>
         </motion.div>

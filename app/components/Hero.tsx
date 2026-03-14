@@ -328,7 +328,7 @@ export default function Hero() {
         </div>
 
         {/* Tech Stack Orbit */}
-        <div className="relative w-full max-w-[450px] aspect-square lg:flex-1 shrink-0 flex items-center justify-center mt-12 lg:mt-0" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
+        <div className="relative w-full max-w-[450px] aspect-square lg:flex-1 shrink-0 flex items-center justify-center mx-auto mt-12 lg:mt-0" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
           <OrbitRing
             radius={innerRadius}
             technologies={innerTechs}

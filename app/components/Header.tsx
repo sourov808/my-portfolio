@@ -12,6 +12,7 @@ const navLinks = navigationLinks;
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -58,8 +59,8 @@ export default function Header() {
   // Scrolled or not on Home Page, and always show background on sub-pages
   const shouldShowBg = scrolled || !isHomePage;
   
-  const headerBg = shouldShowBg 
-    ? (isLight ? 'bg-white/80 shadow-sm' : 'bg-[#0F172A]/80 shadow-lg shadow-black/20') 
+  const headerBg = shouldShowBg
+    ? (isLight ? 'bg-white/80 shadow-sm' : 'bg-[#0F172A]/80 shadow-lg shadow-black/20')
     : 'bg-transparent';
 
   return (
@@ -67,7 +68,7 @@ export default function Header() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-12 py-3 md:py-4 flex items-center justify-between">
         <Logo
           href="/"
-          onClick={(e) => { 
+          onClick={(e) => {
             if (pathname === '/') {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -79,7 +80,7 @@ export default function Header() {
             {navLinks.map((link) => {
               const isHashLink = link.href.includes('#');
               const sectionId = isHashLink ? link.href.split('#')[1] : null;
-              const isActive = (pathname === link.href && !isHashLink && (pathname !== '/' || activeSection === 'hero')) || 
+              const isActive = (pathname === link.href && !isHashLink && (pathname !== '/' || activeSection === 'hero')) ||
                                (pathname === '/' && isHashLink && activeSection === sectionId);
 
               return (
@@ -99,10 +100,27 @@ export default function Header() {
             })}
         </nav>
 
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className={`md:hidden p-2 rounded-lg transition-colors ${
+            isLight ? 'hover:bg-gray-100' : 'hover:bg-white/10'
+          }`}
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {mobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+
         <Link
           href="/#contact"
           onClick={() => scrollToSection('/#contact')}
-          className={`text-sm font-semibold px-5 md:px-6 py-2.5 md:py-2.5 rounded-xl transition-all duration-300 ${
+          className={`hidden md:inline-flex text-sm font-semibold px-5 md:px-6 py-2.5 md:py-2.5 rounded-xl transition-all duration-300 ${
             activeSection === 'contact'
               ? 'bg-primary text-white shadow-lg shadow-primary/30'
               : 'bg-primary hover:bg-primary-hover text-white hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5'
@@ -111,6 +129,50 @@ export default function Header() {
           Contact
         </Link>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <nav className={`md:hidden border-t ${isLight ? 'border-gray-200' : 'border-white/10'}`}>
+          <div className="px-6 py-4 space-y-2">
+            {navLinks.map((link) => {
+              const isHashLink = link.href.includes('#');
+              const sectionId = isHashLink ? link.href.split('#')[1] : null;
+              const isActive = (pathname === link.href && !isHashLink && (pathname !== '/' || activeSection === 'hero')) ||
+                               (pathname === '/' && isHashLink && activeSection === sectionId);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    scrollToSection(link.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    isActive
+                      ? 'text-primary bg-primary/10'
+                      : isLight
+                        ? 'text-gray-600 hover:bg-gray-100'
+                        : 'text-gray-300 hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+            <Link
+              href="/#contact"
+              onClick={() => {
+                scrollToSection('/#contact');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-center text-sm font-semibold px-4 py-3 mt-4 rounded-xl bg-primary text-white"
+            >
+              Contact
+            </Link>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

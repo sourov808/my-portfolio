@@ -1,7 +1,6 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FadeInSection from './components/FadeInSection';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Playground from './components/Playground';
 import Timeline from './components/Timeline';
@@ -14,10 +13,6 @@ export default function Home() {
       <Header />
 
       <Hero />
-
-      <FadeInSection variant="scale-in" delay={0.15}>
-        <Skills />
-      </FadeInSection>
 
       <FadeInSection variant="scale-in" delay={0.15}>
         <Projects />
